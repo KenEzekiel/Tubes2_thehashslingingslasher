@@ -17,7 +17,7 @@ namespace Tubes2_Stima
         static void Main()
         {
             Player p = new Player(0, 0);
-            Matrix b = new Matrix("../../config/example.txt", p);
+            Matrix b = new Matrix("../../config/test.txt", p);
             b.visualize("../../config/before.png");
 
             // kalo mo liat map + berapa kali step suatu kotak
