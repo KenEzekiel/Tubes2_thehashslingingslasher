@@ -10,6 +10,15 @@ namespace Blocks
         public abstract void step();
         public abstract SKColor getColor();
         public abstract string getInfo();
+        public Block L;
+        public Block R;
+        public Block U;
+        public Block D;
+
+        public void setL(Block L) { this.L = L; }
+        public void setR(Block R) { this.R = R; }
+        public void setU(Block U) { this.U = U; }
+        public void setD(Block D) { this.D = D; }
     }
 
     class Basic : Block

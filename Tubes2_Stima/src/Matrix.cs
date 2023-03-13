@@ -52,6 +52,55 @@ namespace Matrices
                     }
                 }
             }
+            for (int i = 0; i < nRow; i++)
+            {
+                for (int j = 0; j < nCol; j++)
+                {
+                    getNeighbours(i, j);
+                }
+            }
+        }
+
+        public void getNeighbours(int i, int j)
+        {
+            // Get all the neighbours of block i, j
+            // Left
+            if (j > 0)
+            {
+                // If can step, then not tembok
+                if (this.mat[i, j-1].canStep())
+                {
+                    this.mat[i, j].setL(this.mat[i, j - 1]);
+                }
+                
+            }
+            // Right
+            if (j < nCol - 1)
+            {
+                // If can step, then not tembok
+                if (this.mat[i, j + 1].canStep())
+                {
+                    this.mat[i, j].setR(this.mat[i, j + 1]);
+                }
+            }
+            // Up
+            if (i > 0)
+            {
+                // If can step, then not tembok
+                if (this.mat[i - 1, j].canStep())
+                {
+                    this.mat[i, j].setU(this.mat[i - 1, j]);
+                }
+            }
+            // Down
+            if (i < nRow - 1)
+            {
+                // If can step, then not tembok
+                if (this.mat[i - 1, j].canStep())
+                {
+                    this.mat[i, j].setD(this.mat[i - 1, j]);
+                }
+            }
         }
 
         public override string ToString()
