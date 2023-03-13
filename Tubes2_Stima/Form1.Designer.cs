@@ -1,4 +1,4 @@
-﻿namespace Connect
+﻿namespace Tubes2_stima
 {
     partial class Form1
     {
