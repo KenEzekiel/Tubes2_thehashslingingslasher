@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Numerics;
 using Blocks;
 using Players;
 using SkiaSharp;
@@ -118,29 +117,6 @@ namespace Matrices
             SKRect baseRect = SKRect.Create(0, 0, minWidth, minHeight);
             cvs.DrawRect(baseRect, basePaint);
 
-            for (int i = 0; i < nRow; i++)
-            {
-                for (int j = 0; j < nCol; j++)
-                {
-                    var baseBlockPaint = new SKPaint
-                    {
-                        IsAntialias = true,
-                        Style = SKPaintStyle.Fill,
-                        Color = new SKColor(0xFFFFFFFF)
-                    };
-
-                    SKRect baseBlockRect = SKRect.Create(currX, currY, squareSize, squareSize);
-                    cvs.DrawRect(baseBlockRect, baseBlockPaint);
-
-                    currX += (pad + squareSize);
-                }
-                currX = sidePad;
-                currY += (pad + squareSize);
-            }
-
-            currX = sidePad;
-            currY = sidePad;
-
             var textPaint = new SKPaint
             {
                 IsAntialias = true,
@@ -153,6 +129,13 @@ namespace Matrices
             {
                 for (int j = 0; j < nCol; j++)
                 {
+                    var baseBlockPaint = new SKPaint
+                    {
+                        IsAntialias = true,
+                        Style = SKPaintStyle.Fill,
+                        Color = new SKColor(0xFFFFFFFF)
+                    };
+
                     var blockPaint = new SKPaint
                     {
                         IsAntialias = true,
@@ -160,8 +143,12 @@ namespace Matrices
                         Color = mat[i, j].getColor()
                     };
 
+                    SKRect baseBlockRect = SKRect.Create(currX, currY, squareSize, squareSize);
+                    cvs.DrawRect(baseBlockRect, baseBlockPaint);
+
                     SKRect blockRect = SKRect.Create(currX, currY, squareSize, squareSize);
                     cvs.DrawRect(blockRect, blockPaint);
+
                     cvs.DrawText(mat[i, j].getInfo(), currX + squareSize / 2, currY + squareSize / 2 + textPaint.TextSize / 2, textPaint);
 
                     currX += (pad + squareSize);
@@ -179,3 +166,4 @@ namespace Matrices
         }
     }
 }
+

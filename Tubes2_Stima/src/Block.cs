@@ -40,7 +40,7 @@ namespace Blocks
 
         public override string ToString()
         {
-            return "B" + stepCount.ToString() + getColor().ToString();
+            return "B" + stepCount.ToString();
         }
 
         public override SKColor getColor()
@@ -69,6 +69,7 @@ namespace Blocks
         {
             return false;
         }
+
         public override void step()
         {
             throw new Exception("Cannot be stepped");

@@ -17,13 +17,20 @@ namespace Tubes2_Stima
         static void Main()
         {
             Player p = new Player(0, 0);
-            Matrix b = new Matrix("../../test/tc.txt", p);
-            b.visualize("../../../test/before.png");
-            Console.WriteLine(b);
+            Matrix b = new Matrix("../../config/example.txt", p);
+            b.visualize("../../config/before.png");
+
+            // kalo mo liat map + berapa kali step suatu kotak
+            // Console.WriteLine(b);
+
+            // isi solusi dari bfs/dfs
             char[] walkPath = { 'R', 'U', 'U', 'U', 'D', 'D', 'R', 'L' };
+
             b.walk(p, walkPath);
-            Console.WriteLine(b);
-            b.visualize("../../test/after.png");
+
+            // kalo mo liat map + berapa kali step suatu kotak
+            // Console.WriteLine(b);
+            b.visualize("../../config/after.png");
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
