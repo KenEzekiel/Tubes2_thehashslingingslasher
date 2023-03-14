@@ -303,14 +303,11 @@
         #endregion
 
         private System.Windows.Forms.Button button_LoadFile;
-        private System.Windows.Forms.OpenFileDialog openFileGraph;
-        private System.Windows.Forms.Panel panel_DrawGraph;
-        private System.Windows.Forms.OpenFileDialog openFileQuery;
+        private System.Windows.Forms.OpenFileDialog openFile;
+        private System.Windows.Forms.OpenFileDialog openFile;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button1;
