@@ -1,3 +1,4 @@
+using Blocks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,41 @@ namespace Tubes2_Stima.src
 {
     class BFS : SearchAlgorithm
     {
-        public Queue<Block> NodeMoves = new Queue<Block>();
+        public Queue<(char move, Block node)> NodeMoves = new Queue<(char move, Block node)>();
 
-        public void insertNode(Block node) {
-            this.NodeMoves.Enqueue(node);
+        public override void insertChild(Block n, char lastMove, bool notDeadend)
+        {
+            // Priority : L U R D
+            if (n.hasL && !(lastMove == 'R'))
+            {
+                insertNode(n.getL(), 'L');
+                notDeadend = true;
+            }
+            if (n.hasU && !(lastMove == 'D'))
+            {
+                insertNode(n.getU(), 'U');
+                notDeadend = true;
+            }
+            if (n.hasR && !(lastMove == 'L'))
+            {
+                insertNode(n.getR(), 'R');
+                notDeadend = true;
+            }
+            if (n.hasD && !(lastMove == 'U'))
+            {
+                insertNode(n.getD(), 'D');
+                notDeadend = true;
+            }
         }
-        public void startSearch(Block node);
+
+        public override void insertNode(Block n, char a)
+        {
+            (char move, Block node) temp = (a, n);
+            this.NodeMoves.Enqueue(temp);
+        }
+        public override void startSearch(Block node)
+        {
+
+        }
     }
 }

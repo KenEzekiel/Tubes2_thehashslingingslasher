@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blocks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,26 +18,22 @@ namespace Tubes2_Stima.src
             this.NodeMoves.Push(temp);
         }
 
-        public abstract void insertChild(Block n, char lastMove, bool notDeadend) {
+        public override void insertChild(Block n, char lastMove, bool notDeadend) {
             // Priority : L U R D
             if (n.hasL && !(lastMove == 'R')) {
-                (char move, Block node) tempL = ('L', n.getL());
-                insertNode(tempL);
+                insertNode(n.getL(), 'L');
                 notDeadend = true;
             }
             if (n.hasU && !(lastMove == 'D')) {
-                (char move, Block node) tempU = ('U', n.getU());
-                insertNode(tempU);
+                insertNode(n.getU(), 'U');
                 notDeadend = true;
             }
             if (n.hasR && !(lastMove == 'L')) {
-                (char move, Block node) tempR = ('R', n.getR());
-                insertNode(tempR);
+                insertNode(n.getR(), 'R');
                 notDeadend = true;
             }
             if (n.hasD && !(lastMove == 'U')) {
-                (char move, Block node) tempD = ('D', n.getD());
-                insertNode(tempD);
+                insertNode(n.getD(), 'D');
                 notDeadend = true;
             }
         }
@@ -44,9 +41,8 @@ namespace Tubes2_Stima.src
         public (char move, Block node) getChild() {
             return this.NodeMoves.Pop();
         }
-        public override void startSearch(Block n, List<char> ListOfMoves) {
+        public override void startSearch(Block n) {
             // DFS with IDS, initial depth limit = 5
-            int initialDepth = 5;
             string moves = "";
             char lastMove = 'S';
             Search(n, lastMove, moves);
@@ -57,15 +53,13 @@ namespace Tubes2_Stima.src
 
             string currentMoves = moves;
             
-            if (node.getInfo() == "Treasure") {
-                if (!node.hasTaken()) {
-                    // treasure count + 1
-                }
-            }
+            
             node.step();
+            // di step nya treasure, tambahin num of treasure++
+            // terus nanti get num of gotten treasurenya, bandingin sama total treasure
             // tambahin currentMove. terus kasih ke block ID
             currentMoves += lastMove;
-            this.BlockIDMovesMapping[node.getID] = currentMoves;
+            this.BlockIDMovesMapping[node.getID()] = currentMoves;
             // cari child nya yang bukan parentnya
             bool notDeadend = false;
             insertChild(node, lastMove, notDeadend);

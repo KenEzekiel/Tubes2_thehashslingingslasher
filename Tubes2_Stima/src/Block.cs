@@ -1,6 +1,5 @@
 ﻿using System;
-using SkiaSharp;
-using static SkiaSharp.SKColor;
+using System.Drawing;
 
 namespace Blocks
 {
@@ -8,7 +7,7 @@ namespace Blocks
     {
         public abstract bool canStep();
         public abstract void step();
-        public abstract SKColor getColor();
+        public abstract Color getColor();
         public abstract string getInfo();
         public Block L;
         public Block R;
@@ -40,17 +39,19 @@ namespace Blocks
         public bool hasChild() { return this.hasL && this.hasR && this.hasU && this.hasD;}
 
         public int getNumOfChild() { return this.numOfChild; }
+
+        
     }
 
     class Basic : Block
     {
         protected int stepCount;
-        protected SKColor baseColor;
+        protected Color baseColor;
 
         public Basic()
         {
             this.stepCount = 0;
-            this.baseColor = new SKColor(0xFF8A2BE2);
+            this.baseColor = new Color(0xFF8A2BE2);
         }
 
         public int getStepCount()
@@ -73,26 +74,27 @@ namespace Blocks
             return "B" + stepCount.ToString();
         }
 
-        public override SKColor getColor()
+        public override Color getColor()
         {
             byte b = new byte();
             b = (byte)(stepCount * 50);
-            return new SKColor(baseColor.Red, baseColor.Green, baseColor.Blue, b);
+            return new Color(baseColor.Red, baseColor.Green, baseColor.Blue, b);
         }
 
         public override string getInfo()
         {
             return "";
         }
+        
     }
 
     class Tembok : Block
     {
-        private SKColor baseColor;
+        private Color baseColor;
 
         public Tembok()
         {
-            this.baseColor = new SKColor(0xFF000000);
+            this.baseColor = new Color(0xFF000000);
         }
 
         public override bool canStep()
@@ -110,7 +112,7 @@ namespace Blocks
             return "X-";
         }
 
-        public override SKColor getColor()
+        public override Color getColor()
         {
             return baseColor;
         }
