@@ -24,6 +24,7 @@ namespace Matrices
             nRow = rows.Length;
             nCol = rows[0].Length / 2 + 1;
             mat = new Block[nRow, nCol];
+            int id = 1;
             for (int i = 0; i < nRow; i++)
             {
                 for (int j = 0; j < nCol; j++)
@@ -33,17 +34,25 @@ namespace Matrices
                     {
                         case 'T':
                             mat[i, j] = new Treasure();
+                            mat[i, j].setID(id);
+                            id++;
                             break;
                         case 'K':
                             mat[i, j] = new Start();
+                            mat[i, j].setID(id);
+                            id++;
                             p.setX(j);
                             p.setY(i);
                             break;
                         case 'X':
                             mat[i, j] = new Tembok();
+                            mat[i, j].setID(id);
+                            id++;
                             break;
                         case 'R':
                             mat[i, j] = new Basic();
+                            mat[i, j].setID(id);
+                            id++;
                             break;
                         case ' ':
                             continue;

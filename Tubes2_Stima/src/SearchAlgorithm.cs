@@ -9,13 +9,11 @@ namespace Tubes2_Stima.src
     abstract class SearchAlgorithm
     {
         
-        public List<char> ListOfMoves = new List<char>();
+        
 
-        public abstract void insertNode(Block node);
-        public abstract void startSearch(Block node);
+        public abstract void insertNode(Block n, char a);
+        public abstract void startSearch(Block n);
+        public abstract void insertChild(Block n);
 
-        public void insertMove(char a) {
-            this.ListOfMoves.Add(a);
-        }
     }
 }
