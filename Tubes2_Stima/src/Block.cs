@@ -51,7 +51,7 @@ namespace Blocks
         public Basic()
         {
             this.stepCount = 0;
-            this.baseColor = new Color(0xFF8A2BE2);
+            this.baseColor = Color.FromName("BlueViolet");
         }
 
         public int getStepCount()
@@ -76,9 +76,11 @@ namespace Blocks
 
         public override Color getColor()
         {
-            byte b = new byte();
-            b = (byte)(stepCount * 50);
-            return new Color(baseColor.Red, baseColor.Green, baseColor.Blue, b);
+            //byte b = new byte();
+            //b = (byte)(stepCount * 50);
+
+            int alpha = stepCount * 50 % 255;
+            return Color.FromArgb(alpha, baseColor.R, baseColor.G, baseColor.B);
         }
 
         public override string getInfo()
@@ -94,7 +96,7 @@ namespace Blocks
 
         public Tembok()
         {
-            this.baseColor = new Color(0xFF000000);
+            this.baseColor = Color.FromName("Black");
         }
 
         public override bool canStep()

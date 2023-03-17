@@ -1,8 +1,9 @@
 ﻿using System;
 using Blocks;
 using Players;
-using SkiaSharp;
+using System.Drawing;
 using System.IO;
+using System.Drawing.Text;
 
 namespace Matrices
 {
@@ -161,66 +162,92 @@ namespace Matrices
             currX = sidePad;
             currY = sidePad;
 
-            SKImageInfo img = new SKImageInfo(minWidth, minHeight);
-            SKSurface sfc = SKSurface.Create(img);
-            SKCanvas cvs = sfc.Canvas;
+            //SKImageInfo img = new SKImageInfo(minWidth, minHeight);
+            //SKSurface sfc = SKSurface.Create(img);
+            //SKCanvas cvs = sfc.Canvas;
 
-            var basePaint = new SKPaint
-            {
-                IsAntialias = true,
-                Style = SKPaintStyle.Fill,
-                Color = new SKColor(0xFF000000)
-            };
+            Bitmap image = new Bitmap(minWidth, minHeight);
+            Graphics graphic = Graphics.FromImage(image);
 
-            SKRect baseRect = SKRect.Create(0, 0, minWidth, minHeight);
-            cvs.DrawRect(baseRect, basePaint);
+            //var basePaint = new SKPaint
+            //{
+            //    IsAntialias = true,
+            //    Style = SKPaintStyle.Fill,
+            //    Color = new SKColor(0xFF000000)
+            //};
 
-            var textPaint = new SKPaint
-            {
-                IsAntialias = true,
-                TextSize = 32.0f,
-                TextAlign = SKTextAlign.Center,
-                Color = new SKColor(0xFF000000)
-            };
+            SolidBrush baseBrush = new SolidBrush(Color.Black);
+
+            //SKRect baseRect = SKRect.Create(0, 0, minWidth, minHeight);
+            //cvs.DrawRect(baseRect, basePaint);
+
+            Rectangle baseRect = new Rectangle(0, 0, minWidth, minHeight);
+            graphic.FillRectangle(baseBrush, baseRect);
+
+            //var textPaint = new SKPaint
+            //{
+            //    IsAntialias = true,
+            //    TextSize = 32.0f,
+            //    TextAlign = SKTextAlign.Center
+            //    Color = new SKColor(0xFF000000)
+            //};
+
+            int fontSize = 32;
+            var fontFamily = new FontFamily("Arial");
+            var font = new Font(fontFamily, fontSize, FontStyle.Regular, GraphicsUnit.Pixel);
+            var textBrush = new SolidBrush(Color.Black);
+            graphic.TextRenderingHint = TextRenderingHint.AntiAlias;
 
             for (int i = 0; i < nRow; i++)
             {
                 for (int j = 0; j < nCol; j++)
                 {
-                    var baseBlockPaint = new SKPaint
-                    {
-                        IsAntialias = true,
-                        Style = SKPaintStyle.Fill,
-                        Color = new SKColor(0xFFFFFFFF)
-                    };
+                    //var baseBlockPaint = new SKPaint
+                    //{
+                    //    IsAntialias = true,
+                    //    Style = SKPaintStyle.Fill,
+                    //    Color = new SKColor(0xFFFFFFFF)
+                    //};
 
-                    var blockPaint = new SKPaint
-                    {
-                        IsAntialias = true,
-                        Style = SKPaintStyle.Fill,
-                        Color = mat[i, j].getColor()
-                    };
+                    SolidBrush baseBlockBrush = new SolidBrush(Color.White);
 
-                    SKRect baseBlockRect = SKRect.Create(currX, currY, squareSize, squareSize);
-                    cvs.DrawRect(baseBlockRect, baseBlockPaint);
+                    //var blockPaint = new SKPaint
+                    //{
+                    //    IsAntialias = true,
+                    //    Style = SKPaintStyle.Fill,
+                    //    Color = mat[i, j].getColor()
+                    //};
 
-                    SKRect blockRect = SKRect.Create(currX, currY, squareSize, squareSize);
-                    cvs.DrawRect(blockRect, blockPaint);
+                    SolidBrush blockBrush = new SolidBrush(mat[i, j].getColor());
 
-                    cvs.DrawText(mat[i, j].getInfo(), currX + squareSize / 2, currY + squareSize / 2 + textPaint.TextSize / 2, textPaint);
+                    //SKRect baseBlockRect = SKRect.Create(currX, currY, squareSize, squareSize);
+                    //cvs.DrawRect(baseBlockRect, baseBlockPaint);
 
+                    Rectangle baseBlockRect = new Rectangle(currX, currY, squareSize, squareSize);
+                    graphic.FillRectangle(baseBlockBrush, baseBlockRect);
+
+                    //SKRect blockRect = SKRect.Create(currX, currY, squareSize, squareSize);
+                    //cvs.DrawRect(blockRect, blockPaint);
+
+                    Rectangle blockRect = new Rectangle(currX, currY, squareSize, squareSize);
+                    graphic.FillRectangle(blockBrush, blockRect);
+
+                    // cvs.DrawText(mat[i, j].getInfo(), currX + squareSize / 2, currY + squareSize / 2 + textPaint.TextSize / 2, textPaint);
+                    graphic.DrawString(mat[i,j].getInfo(), font, textBrush, new PointF(currX + squareSize / 2, currY + squareSize / 2 + fontSize / 2));
                     currX += (pad + squareSize);
                 }
                 currX = sidePad;
                 currY += (pad + squareSize);
             }
 
-            using (var image = sfc.Snapshot())
-            using (var data = image.Encode(SKEncodedImageFormat.Png, 80))
-            using (var stream = File.OpenWrite(path))
-            {
-                data.SaveTo(stream);
-            }
+            //using (var image = sfc.Snapshot())
+            //using (var data = image.Encode(SKEncodedImageFormat.Png, 80))
+            //using (var stream = File.OpenWrite(path))
+            //{
+            //    data.SaveTo(stream);
+            //}
+
+            image.Save(path);
         }
     }
 }

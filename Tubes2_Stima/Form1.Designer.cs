@@ -304,7 +304,6 @@
 
         private System.Windows.Forms.Button button_LoadFile;
         private System.Windows.Forms.OpenFileDialog openFile;
-        private System.Windows.Forms.OpenFileDialog openFile;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
