@@ -18,7 +18,7 @@ namespace Tubes2_Stima
         {
             Player p = new Player(0, 0);
             Matrix b = new Matrix("../../config/test.txt", p);
-            b.visualize("../../config/before.png");
+            b.visualize("../../config/testSysDrawBefore.png");
 
             // kalo mo liat map + berapa kali step suatu kotak
             // Console.WriteLine(b);
@@ -30,7 +30,7 @@ namespace Tubes2_Stima
 
             // kalo mo liat map + berapa kali step suatu kotak
             // Console.WriteLine(b);
-            b.visualize("../../config/after.png");
+            b.visualize("../../config/testSysDrawAfter.png");
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

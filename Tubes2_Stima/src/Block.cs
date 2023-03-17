@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 
 namespace Blocks
 {
@@ -76,9 +77,6 @@ namespace Blocks
 
         public override Color getColor()
         {
-            //byte b = new byte();
-            //b = (byte)(stepCount * 50);
-
             int alpha = stepCount * 50 % 255;
             return Color.FromArgb(alpha, baseColor.R, baseColor.G, baseColor.B);
         }
@@ -141,15 +139,19 @@ namespace Blocks
     class Treasure : Basic
     {
         private bool taken;
+        static private int treasureCount = 0;
+        static private int treasureTaken = 0;
 
         public Treasure()
         {
             taken = false;
+            treasureTaken++;
         }
 
         public override void step()
         {
             taken = true;
+            treasureTaken++;
             this.stepCount++;
         }
 
@@ -166,6 +168,11 @@ namespace Blocks
         public bool isTaken()
         {
             return taken;
+        }
+
+        static public bool isAllTaken()
+        {
+            return treasureTaken == treasureCount;
         }
     }
 }
