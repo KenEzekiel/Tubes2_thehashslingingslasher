@@ -28,8 +28,7 @@ namespace Tubes2_stima
             int nWidthEllipse, // height of ellipse
             int nHeightEllipse // width of ellipse
         );
-        private string currentAccount;
-        private string targetAccount;
+
 
         public Form1()
         {
