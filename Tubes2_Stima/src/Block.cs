@@ -145,7 +145,7 @@ namespace Blocks
         public Treasure()
         {
             taken = false;
-            treasureTaken++;
+            treasureCount++;
         }
 
         public override void step()
@@ -173,6 +173,16 @@ namespace Blocks
         static public bool isAllTaken()
         {
             return treasureTaken == treasureCount;
+        }
+
+        static public int getTreasureCount()
+        { 
+            return treasureCount;
+        }
+
+        static public int getTreasureTaken() 
+        {
+            return treasureTaken;
         }
     }
 }

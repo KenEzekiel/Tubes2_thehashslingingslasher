@@ -143,11 +143,9 @@ namespace Matrices
         {
             foreach (char dir in walkPath)
             {
-                Console.WriteLine(p);
                 this.stepAt(p.getX(), p.getY());
                 p.move(dir);
             }
-            Console.WriteLine(p);
             this.stepAt(p.getX(), p.getY());
         }
 
