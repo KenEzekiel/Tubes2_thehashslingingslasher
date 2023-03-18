@@ -19,6 +19,11 @@ namespace Matrices
             nCol = cols;
         }
 
+        public Block GetBlock(int x, int y)
+        {
+            return mat[x, y];
+        }
+
         public Matrix(string path, Player p)
         {
             string[] rows = File.ReadAllLines(path);

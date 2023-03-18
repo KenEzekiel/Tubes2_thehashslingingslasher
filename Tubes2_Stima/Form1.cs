@@ -146,7 +146,7 @@ namespace Tubes2_stima
 
             Block start = map.GetBlock(p.getX(), p.getY());
 
-            DFS dfs = new DFS(map.numOfTreasure);
+            DFS dfs = new DFS(Treasure.getTreasureCount());
             steps = dfs.startSearch(start);
 
 

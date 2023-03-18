@@ -41,9 +41,9 @@ namespace Tubes2_Stima.src
             (char move, Block node) temp = (a, n);
             this.NodeMoves.Enqueue(temp);
         }
-        public override void startSearch(Block node)
+        public override string startSearch(Block node)
         {
-
+            return "";
         }
     }
 }

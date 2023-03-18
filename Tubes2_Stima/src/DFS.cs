@@ -13,6 +13,13 @@ namespace Tubes2_Stima.src
 
         public Dictionary<int, string> BlockIDMovesMapping = new Dictionary<int, string>();
 
+        public int numOfTreasure = 0;
+
+        public DFS(int numOfTreasure)
+        {
+            this.numOfTreasure = numOfTreasure;
+        }
+
         public override void insertNode(Block n, char a) {
             (char move, Block node) temp = (a, n);
             this.NodeMoves.Push(temp);
@@ -41,20 +48,28 @@ namespace Tubes2_Stima.src
         public (char move, Block node) getChild() {
             return this.NodeMoves.Pop();
         }
-        public override void startSearch(Block n) {
+        public override string startSearch(Block n) {
             // DFS with IDS, initial depth limit = 5
             string moves = "";
             char lastMove = 'S';
-            Search(n, lastMove, moves);
+            moves = Search(n, lastMove, ref moves);
             // tinggal return moves
+            return moves;
         }
 
-        public void Search(Block node, char lastMove, string moves) {
+        public string Search(Block node, char lastMove, ref string moves) {
 
             string currentMoves = moves;
             
             
             node.step();
+            
+            if (Treasure.getTreasureCount() == Treasure.getTreasureTaken())
+            {
+                moves = currentMoves;
+                return currentMoves;
+            }
+            
             // di step nya treasure, tambahin num of treasure++
             // terus nanti get num of gotten treasurenya, bandingin sama total treasure
             // tambahin currentMove. terus kasih ke block ID
@@ -77,31 +92,32 @@ namespace Tubes2_Stima.src
                 Block nextBlock = Child.node;
                 if (currentMoves.StartsWith(BlockIDMovesMapping[nextBlock.ID])) {
                     // Block yang akan dikunjungi sudah pernah dikunjungi oleh track yang sama
-                    return;
+                    return currentMoves;
                 } else {
                     for (int i = 0; i < node.getNumOfChild() - 1; i++) {
                         // Search untuk semua child yang dimiliki oleh node yang sedang diinjak
-                        Search(nextBlock, nextMove, currentMoves);
+                        currentMoves = Search(nextBlock, nextMove, ref currentMoves);
                     }
                     
                 }
                 // masih belum balance?
+                return currentMoves;
                 
             } else {
                 // deadend, backtrack
                 if (lastMove == 'L') {
-                    moves += "R";
+                    currentMoves += "R";
                 }
                 if (lastMove == 'U') {
-                    moves += "D";
+                    currentMoves += "D";
                 }
                 if (lastMove == 'R') {
-                    moves += "L";
+                    currentMoves += "L";
                 }
                 if (lastMove == 'D') {
-                    moves += "U";
+                    currentMoves += "U";
                 }
-                return;
+                return currentMoves;
             }
             
         }

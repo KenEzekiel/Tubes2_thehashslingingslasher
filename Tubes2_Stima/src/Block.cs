@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace Blocks
 {
-    abstract class Block
+    abstract public class Block
     {
         public abstract bool canStep();
         public abstract void step();
