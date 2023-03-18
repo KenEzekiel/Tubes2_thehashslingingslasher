@@ -11,14 +11,19 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TreeView;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Players;
+using Matrices;
+using Blocks;
+using Tubes2_Stima.src;
 
 namespace Tubes2_stima
 {
 
     public partial class Form1 : Form
     {
+
+        public Matrices.Matrix map;
+        public Player p;
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern System.IntPtr CreateRoundRectRgn
@@ -35,10 +40,8 @@ namespace Tubes2_stima
         public Form1()
         {
             InitializeComponent();
-            button1.Enabled = true;
-            button_LoadFile.Enabled = true;
+            button1.Enabled = false;
         }
-
 
         private void panel_DrawGraph_Paint(object sender, PaintEventArgs e)
         {
@@ -118,15 +121,36 @@ namespace Tubes2_stima
 
         }
 
-        private void button_LoadFile_Click_1(object sender, EventArgs e)
+        private void button_LoadFile_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            Player player = new Player(0, 0);
+            String path = "./config/test.txt";
+            Matrices.Matrix matrix = new Matrices.Matrix (path, player);
 
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                string fileName = openFileDialog.FileName;
-                //algoritma nunjukin graf pas kebuka
-            }
+            this.p = player;
+            this.map = matrix;
+
+            button1.Enabled = true;
+        }
+
+        private void label7_Click_1(object sender, EventArgs e)
+        {
+            // Steps
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // Start search
+            // debug DFS
+            String steps = "";
+
+            Block start = map.GetBlock(p.getX(), p.getY());
+
+            DFS dfs = new DFS(map.numOfTreasure);
+            steps = dfs.startSearch(start);
+
+
+            label7.Text=steps;
         }
     }
 }
