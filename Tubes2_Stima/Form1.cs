@@ -11,6 +11,8 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TreeView;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Tubes2_stima
 {
@@ -33,8 +35,10 @@ namespace Tubes2_stima
         public Form1()
         {
             InitializeComponent();
-            button1.Enabled = false;
+            button1.Enabled = true;
+            button_LoadFile.Enabled = true;
         }
+
 
         private void panel_DrawGraph_Paint(object sender, PaintEventArgs e)
         {
@@ -112,6 +116,17 @@ namespace Tubes2_stima
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button_LoadFile_Click_1(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = openFileDialog.FileName;
+                //algoritma nunjukin graf pas kebuka
+            }
         }
     }
 }
