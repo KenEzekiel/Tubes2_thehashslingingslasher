@@ -55,6 +55,10 @@ namespace Tubes2_Stima.src
             moves = Search(n, ref lastMove, moves, TSP);
             // tinggal return moves
             // TODO: reset matrix abis ini
+            if (Treasure.getTreasureCount() != Treasure.getTreasureTaken()) {
+                Console.WriteLine("No path found");
+                return "";
+            }
             return moves;
         }
 
