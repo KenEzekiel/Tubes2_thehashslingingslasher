@@ -15,6 +15,8 @@ using Players;
 using Matrices;
 using Blocks;
 using Tubes2_Stima.src;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using SkiaSharp;
 
 namespace Tubes2_stima
 {
@@ -40,15 +42,10 @@ namespace Tubes2_stima
         public Form1()
         {
             InitializeComponent();
-            button1.Enabled = false;
+            button1.Enabled = true;
         }
 
         private void panel_DrawGraph_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
@@ -68,11 +65,6 @@ namespace Tubes2_stima
 
         }
 
-
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
@@ -99,11 +91,6 @@ namespace Tubes2_stima
         private void Form1_Load(object sender, EventArgs e)
         {
             button1.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, button1.Width, button1.Height, 30, 30));
-        }
-
-        private void textBox1_TextChanged_1(object sender, EventArgs e)
-        {
-
         }
 
         private void label8_Click(object sender, EventArgs e)
@@ -138,6 +125,11 @@ namespace Tubes2_stima
             // Steps
         }
 
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             // Start search
@@ -150,7 +142,42 @@ namespace Tubes2_stima
             steps = dfs.startSearch(start);
 
 
-            label7.Text=steps;
+            label7.Text = steps;
+            if (radioButton1.Checked)
+            {
+                if (comboBox3.Text == "With TSP")
+                {
+                    string x = "DFS1";
+                    // visualisasiin
+                    textBox1.Text = x;
+                }
+                else if (comboBox3.Text == "Without TSP")
+                {
+                    string x = "DFS2";
+                    // visualisasiin
+                    textBox1.Text = x;
+                }
+            }
+            if (radioButton2.Checked)
+            {
+                if (comboBox3.Text == "With TSP")
+                {
+                    string x = "BFS1";
+                    // visualisasiin
+                    textBox1.Text = x;
+                }
+                else if (comboBox3.Text == "Without TSP")
+                {
+                    string x = "BFS2";
+                    // visualisasiin
+                    textBox1.Text = x;
+                }
+            }
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
