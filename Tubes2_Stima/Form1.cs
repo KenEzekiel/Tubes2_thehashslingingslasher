@@ -1,22 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.Windows.Forms;
-using System.Threading;
-using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using Players;
 using Matrices;
 using Blocks;
 using Tubes2_Stima.src;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using SkiaSharp;
+using System.Diagnostics;
 
 namespace Tubes2_stima
 {
@@ -25,7 +16,7 @@ namespace Tubes2_stima
     {
 
         public Matrices.Matrix map;
-        public Player p;
+        public Player p = new Player(0,0);
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern System.IntPtr CreateRoundRectRgn
@@ -43,11 +34,6 @@ namespace Tubes2_stima
         {
             InitializeComponent();
             button1.Enabled = true;
-        }
-
-        private void panel_DrawGraph_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         private void label7_Click(object sender, EventArgs e)
@@ -112,7 +98,7 @@ namespace Tubes2_stima
         {
             Player player = new Player(0, 0);
             String path = "./config/test.txt";
-            Matrices.Matrix matrix = new Matrices.Matrix (path, player);
+            Matrices.Matrix matrix = new Matrices.Matrix (path, ref player);
 
             this.p = player;
             this.map = matrix;
@@ -136,20 +122,42 @@ namespace Tubes2_stima
             // debug DFS
             String steps = "";
 
-            Block start = map.GetBlock(p.getX(), p.getY());
+            Player player = new Player(3, 0);
+            String path = "./config/test.txt";
+            Matrices.Matrix matrix = new Matrices.Matrix(path, ref player);
 
-            DFS dfs = new DFS(Treasure.getTreasureCount());
-            steps = dfs.startSearch(start);
 
 
-            label7.Text = steps;
+            Console.WriteLine(matrix.ToString());
+
+            Console.WriteLine(p);
+            Block start = matrix.GetBlock(player.getY(), player.getX());
+
+
+          
             if (radioButton1.Checked)
             {
+                DFS dfs = new DFS(Treasure.getTreasureCount());
+                Console.WriteLine("bangke");
                 if (comboBox3.Text == "With TSP")
                 {
+                    //
+                    Stopwatch stopwatch = new Stopwatch();
+                    stopwatch.Start();
+                    steps = dfs.startSearch(start, true);
+                    stopwatch.Stop();
+                    // 
                     string x = "DFS1";
-                    // visualisasiin
+                    Console.WriteLine("tai");
+                    Console.WriteLine(steps);
+                    matrix.walk(player, steps);
+                    matrix.visualize("./test.png");
                     textBox1.Text = x;
+                    textBox2.Text = steps;
+                    textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
+                    pictureBox2.Image = Image.FromFile("./test.png");
+                    pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+
                 }
                 else if (comboBox3.Text == "Without TSP")
                 {
@@ -176,6 +184,11 @@ namespace Tubes2_stima
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
         {
 
         }

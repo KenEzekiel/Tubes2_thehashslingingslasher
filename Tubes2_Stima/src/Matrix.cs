@@ -83,11 +83,11 @@ namespace Matrices
             if (j > 0)
             {
                 // If can step, then not tembok
-                if (this.mat[i, j-1].canStep())
+                if (this.mat[i, j - 1].canStep())
                 {
                     this.mat[i, j].setL(this.mat[i, j - 1]);
                 }
-                
+
             }
             // Right
             if (j < nCol - 1)
@@ -144,7 +144,7 @@ namespace Matrices
             mat[y, x].step();
         }
 
-        public void walk(Player p, char[] walkPath)
+        public void walk(Player p, string walkPath)
         {
             foreach (char dir in walkPath)
             {
@@ -198,17 +198,17 @@ namespace Matrices
                     Rectangle blockRect = new Rectangle(currX, currY, squareSize, squareSize);
                     graphic.FillRectangle(blockBrush, blockRect);
 
-                    graphic.DrawString(mat[i,j].getInfo(), font, textBrush, blockRect, stringFormat);
+                    graphic.DrawString(mat[i, j].getInfo(), font, textBrush, blockRect, stringFormat);
                     currX += (pad + squareSize);
                 }
                 currX = sidePad;
                 currY += (pad + squareSize);
             }
-
-            image.Save(path, System.Drawing.Imaging.ImageFormat.Png);
-
-            image.Dispose();
+            Bitmap image2 = new Bitmap(image);
+            //image.Dispose();
+            image2.Save(path, System.Drawing.Imaging.ImageFormat.Png);
+            Console.WriteLine("hgkdl");
+            
         }
     }
 }
-
