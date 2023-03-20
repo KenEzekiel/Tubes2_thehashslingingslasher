@@ -19,6 +19,7 @@ namespace Tubes2_Stima.src
                 {
                     notDeadend = false;
                     stopNow = true;
+                    break;
                 }
                 if ( !(lastMove == 'R'))
                 {
