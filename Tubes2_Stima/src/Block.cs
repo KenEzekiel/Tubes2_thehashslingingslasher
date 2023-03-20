@@ -17,12 +17,15 @@ namespace Blocks
 
         public int ID;
 
+        public bool nStart = false;
+
         public bool hasL = false;
         public bool hasR = false;
         public bool hasU = false;
         public bool hasD = false;
         public bool hasID = false;
         public int numOfChild = 0;
+
 
         public void setL(Block L) { this.L = L; this.hasL = true; this.numOfChild++; }
         public void setR(Block R) { this.R = R; this.hasR = true; this.numOfChild++; }
@@ -133,6 +136,13 @@ namespace Blocks
         public override string getInfo()
         {
             return "Start";
+        }
+
+        public void isNStart(Block B) {
+        if (getInfo() == "Start")
+            {
+                nStart = true;
+            }
         }
     }
 
