@@ -12,7 +12,7 @@ namespace Matrices
         private int nCol, nRow;
         private Block[,] mat;
 
-        public Matrix(int rows, int cols, Player p)
+        public Matrix(int rows, int cols, ref Player p)
         {
             mat = new Block[rows, cols];
             nRow = rows;
@@ -24,7 +24,7 @@ namespace Matrices
             return mat[x, y];
         }
 
-        public Matrix(string path, Player p)
+        public Matrix(string path, ref Player p)
         {
             string[] rows = File.ReadAllLines(path);
             nRow = rows.Length;

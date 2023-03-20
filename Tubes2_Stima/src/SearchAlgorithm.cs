@@ -12,8 +12,8 @@ namespace Tubes2_Stima.src
         
 
         public abstract void insertNode(Block n, char a);
-        public abstract string startSearch(Block n);
-        public abstract void insertChild(Block n, char lastMove, bool notDeadend);
+        public abstract string startSearch(Block n, bool TSP);
+        public abstract void insertChild(Block n, char lastMove, ref bool notDeadend);
 
     }
 }
