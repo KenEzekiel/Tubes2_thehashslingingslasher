@@ -60,7 +60,7 @@ namespace Tubes2_Stima.src
                 Console.WriteLine("No path found");
                 return "";
             }
-            NumOfSteps = moves.Length();
+            NumOfSteps = moves.Length;
             return moves;
         }
 

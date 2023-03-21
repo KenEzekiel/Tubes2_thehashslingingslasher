@@ -128,9 +128,9 @@ namespace Matrices
         public void resetMatrixStep() {
             for (int i = 0; i < nRow; i++)
             {
-                for (int j = 0; j < nColumn; j++) {
+                for (int j = 0; j < nCol; j++) {
                     if (this.mat[i, j].canStep())
-                    this.mat[i, j].resetStep();
+                    ((Basic)this.mat[i, j]).resetStep();
                 }
             }
 
@@ -138,9 +138,9 @@ namespace Matrices
 
         public int GetNumOfSteppedNodes() {
             int NumOfSteppedNodes = 0;
-            for (int i = 0; i < nRows; i++) {
+            for (int i = 0; i < nRow; i++) {
                 for (int j = 0; j < nCol; j++) {
-                    if (this.mat[i, j].getStepCount() > 0) {
+                    if (((Basic)this.mat[i, j]).getStepCount() > 0) {
                         NumOfSteppedNodes++;
                     }
                 }
