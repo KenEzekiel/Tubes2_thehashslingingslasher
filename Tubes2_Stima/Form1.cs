@@ -7,13 +7,18 @@ using Matrices;
 using Blocks;
 using Tubes2_Stima.src;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.IO;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Tubes2_stima
 {
 
     public partial class Form1 : Form
     {
+        //timer buat slider
+        private Timer timer = new Timer();
+        //private int speed = 200;
 
         public Matrices.Matrix map;
         public Player p = new Player(0,0);
@@ -34,6 +39,7 @@ namespace Tubes2_stima
         {
             InitializeComponent();
             button1.Enabled = true;
+
         }
 
         private void label7_Click(object sender, EventArgs e)
@@ -155,8 +161,15 @@ namespace Tubes2_stima
                     textBox1.Text = x;
                     textBox2.Text = steps;
                     textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
-                    pictureBox2.Image = Image.FromFile("./test.png");
-                    pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                    //timer.Interval = currentSpeed / speed;
+                    timer.Interval = currentSpeed;
+                    timer.Tick += new EventHandler(DisplayNextImage);
+                    //DisplayNextImage(sender, e);
+                    timer.Start();
+
+                    //pictureBox2.Image = Image.FromFile("./test.png");
+                    //pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
 
                 }
                 else if (comboBox3.Text == "Without TSP")
@@ -189,6 +202,70 @@ namespace Tubes2_stima
         }
 
         private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button_LoadFile_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        //berhub sm speed"an
+        private int currentSpeed = 80000;
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            int[] speedValues = {12800, 6400, 3200, 1600, 800, 400, 200, 100, 50};
+    
+            // nyocokin index sm speed
+            int selectedIndex = trackBar1.Value - 1;
+            if (selectedIndex >= 0 && selectedIndex < speedValues.Length)
+            {
+                currentSpeed = speedValues[selectedIndex];
+            }
+            timer.Interval = currentSpeed;
+        }
+
+        // buat nampilin gbr" otomatis keganti dlm 1 folder
+        static string folderPath = "./config"; 
+        string[] imagePaths = System.IO.Directory.GetFiles(folderPath, "*.png").OrderBy(f => File.GetLastWriteTime(f)).ToArray();
+        private int currentIndex = 0; // index current image
+
+
+        private void DisplayNextImage(object sender, EventArgs e)
+        {
+           
+            if (imagePaths == null || imagePaths.Length == 0)
+            {
+                MessageBox.Show("Tidak ada gambar :(");
+                return;
+            }
+
+            // Load image at curr index
+            string imagePath = imagePaths[currentIndex];
+            Image image = Image.FromFile(imagePath);
+
+            pictureBox2.Image = image;
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            currentIndex = (currentIndex + 1) % imagePaths.Length;
+
+            // Reset timer with new speed
+            timer.Interval = currentSpeed;
+            //timer.Start();
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
         {
 
         }
