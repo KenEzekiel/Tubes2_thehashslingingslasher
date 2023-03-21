@@ -85,6 +85,10 @@ namespace Blocks
         {
             return "";
         }
+
+        public void resetStep() {
+            this.stepCount = 0;
+        }
         
     }
 
