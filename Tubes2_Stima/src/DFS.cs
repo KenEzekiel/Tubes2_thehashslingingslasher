@@ -121,7 +121,7 @@ namespace Tubes2_Stima.src
                         nextBlock = Child.node;
                         if (BlockIDMovesMapping.ContainsKey(nextBlock.ID) && currentMoves.StartsWith(BlockIDMovesMapping[nextBlock.ID])) {
                             // Block yang akan dikunjungi sudah pernah dikunjungi oleh track yang sama
-                            return currentMoves;
+                            // return currentMoves;
                         } else {
                             currentMoves = Search(nextBlock, ref nextMove, currentMoves, TSP);
                         }
