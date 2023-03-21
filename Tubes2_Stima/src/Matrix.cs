@@ -12,6 +12,10 @@ namespace Matrices
         private int nCol, nRow;
         private Block[,] mat;
 
+        public static int NumOfSteppableNodes = 0;
+
+        
+
         public Matrix(int rows, int cols, ref Player p)
         {
             mat = new Block[rows, cols];
@@ -42,6 +46,7 @@ namespace Matrices
                             mat[i, j] = new Treasure();
                             mat[i, j].setID(id);
                             id++;
+                            NumOfSteppableNodes++;
                             break;
                         case 'K':
                             mat[i, j] = new Start();
@@ -49,6 +54,7 @@ namespace Matrices
                             id++;
                             p.setX(j);
                             p.setY(i);
+                            NumOfSteppableNodes++;
                             break;
                         case 'X':
                             mat[i, j] = new Tembok();
@@ -59,6 +65,7 @@ namespace Matrices
                             mat[i, j] = new Basic();
                             mat[i, j].setID(id);
                             id++;
+                            NumOfSteppableNodes++;
                             break;
                         case ' ':
                             continue;
@@ -118,6 +125,29 @@ namespace Matrices
             }
         }
 
+        public void resetMatrixStep() {
+            for (int i = 0; i < nRow; i++)
+            {
+                for (int j = 0; j < nColumn; j++) {
+                    if (this.mat[i, j].canStep())
+                    this.mat[i, j].resetStep();
+                }
+            }
+
+        }
+
+        public int GetNumOfSteppedNodes() {
+            int NumOfSteppedNodes = 0;
+            for (int i = 0; i < nRows; i++) {
+                for (int j = 0; j < nCol; j++) {
+                    if (this.mat[i, j].getStepCount() > 0) {
+                        NumOfSteppedNodes++;
+                    }
+                }
+            }
+            return NumOfSteppedNodes;
+        }
+
         public override string ToString()
         {
             string res = "";
@@ -146,6 +176,7 @@ namespace Matrices
 
         public void walk(Player p, string walkPath)
         {
+            resetMatrixStep();
             foreach (char dir in walkPath)
             {
                 this.stepAt(p.getX(), p.getY());
