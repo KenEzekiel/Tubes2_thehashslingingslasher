@@ -13,6 +13,8 @@ namespace Tubes2_Stima.src
 
         public Dictionary<int, string> BlockIDMovesMapping = new Dictionary<int, string>();
 
+        public static int NumOfSteps = 0;
+
         public int numOfTreasure = 0;
 
         public DFS(int numOfTreasure)
@@ -54,11 +56,11 @@ namespace Tubes2_Stima.src
             char lastMove = 'S';
             moves = Search(n, ref lastMove, moves, TSP);
             // tinggal return moves
-            // TODO: reset matrix abis ini
             if (Treasure.getTreasureCount() != Treasure.getTreasureTaken()) {
                 Console.WriteLine("No path found");
                 return "";
             }
+            NumOfSteps = moves.Length();
             return moves;
         }
 
