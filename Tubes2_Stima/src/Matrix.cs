@@ -1,6 +1,6 @@
 ﻿using System;
 using Blocks;
-using Players;
+using Positions;
 using System.Drawing;
 using System.IO;
 using System.Drawing.Text;
@@ -11,29 +11,39 @@ namespace Matrices
     {
         private int nCol, nRow;
         private Block[,] mat;
-
+        private Position start;
         public static int NumOfSteppableNodes = 0;
 
-        
-
-        public Matrix(int rows, int cols, ref Player p)
+        public Matrix(int rows, int cols)
         {
             mat = new Block[rows, cols];
             nRow = rows;
             nCol = cols;
+            start = new Position();
         }
 
-        public Block GetBlock(int x, int y)
+        public Block GetBlock(int i, int j)
         {
-            return mat[x, y];
+            return mat[i, j];
         }
 
-        public Matrix(string path, ref Player p)
+        public Block GetBlock(Position p)
+        {
+            return mat[p.getI(), p.getJ()];
+        }
+
+        public Block GetStart()
+        {
+            return mat[start.getI(), start.getJ()];
+        }
+
+        public Matrix(string path)
         {
             string[] rows = File.ReadAllLines(path);
             nRow = rows.Length;
             nCol = rows[0].Length / 2 + 1;
             mat = new Block[nRow, nCol];
+            start = new Position();
             int id = 1;
             for (int i = 0; i < nRow; i++)
             {
@@ -52,8 +62,8 @@ namespace Matrices
                             mat[i, j] = new Start();
                             mat[i, j].setID(id);
                             id++;
-                            p.setX(j);
-                            p.setY(i);
+                            start.setI(i);
+                            start.setJ(j);
                             NumOfSteppableNodes++;
                             break;
                         case 'X':
@@ -169,20 +179,25 @@ namespace Matrices
             return res;
         }
 
-        public void stepAt(int x, int y)
+        public void stepAt(int i, int j)
         {
-            mat[y, x].step();
+            mat[i, j].step();
+        }
+        public void stepAt(Position p)
+        {
+            mat[p.getI(), p.getJ()].step();
         }
 
-        public void walk(Player p, string walkPath)
+        public void walk(string walkPath)
         {
             resetMatrixStep();
+            Position currPos = new Position(this.start);
             foreach (char dir in walkPath)
             {
-                this.stepAt(p.getX(), p.getY());
-                p.move(dir);
+                this.stepAt(currPos);
+                currPos.move(dir);
             }
-            this.stepAt(p.getX(), p.getY());
+            this.stepAt(currPos);
         }
 
         public void visualize(string path)
@@ -235,11 +250,8 @@ namespace Matrices
                 currX = sidePad;
                 currY += (pad + squareSize);
             }
-            Bitmap image2 = new Bitmap(image);
-            //image.Dispose();
-            image2.Save(path, System.Drawing.Imaging.ImageFormat.Png);
-            Console.WriteLine("hgkdl");
-            
+            image.Save(path, System.Drawing.Imaging.ImageFormat.Png);
+            image.Dispose();
         }
     }
 }

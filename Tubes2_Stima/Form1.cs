@@ -2,11 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using Players;
-using Matrices;
 using Blocks;
 using Tubes2_Stima.src;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.IO;
 using System.Diagnostics;
 using System.Linq;
@@ -21,7 +18,6 @@ namespace Tubes2_stima
         //private int speed = 200;
 
         public Matrices.Matrix map;
-        public Player p = new Player(0,0);
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern System.IntPtr CreateRoundRectRgn
@@ -102,11 +98,8 @@ namespace Tubes2_stima
 
         private void button_LoadFile_Click(object sender, EventArgs e)
         {
-            Player player = new Player(0, 0);
             String path = "./config/test.txt";
-            Matrices.Matrix matrix = new Matrices.Matrix (path, ref player);
-
-            this.p = player;
+            Matrices.Matrix matrix = new Matrices.Matrix (path);
             this.map = matrix;
 
             button1.Enabled = true;
@@ -128,23 +121,21 @@ namespace Tubes2_stima
             // debug DFS
             String steps = "";
 
-            Player player = new Player(3, 0);
             String path = "./config/test.txt";
-            Matrices.Matrix matrix = new Matrices.Matrix(path, ref player);
+            Matrices.Matrix matrix = new Matrices.Matrix(path);
 
 
 
             Console.WriteLine(matrix.ToString());
 
-            Console.WriteLine(p);
-            Block start = matrix.GetBlock(player.getY(), player.getX());
+            Block start = matrix.GetStart();
 
 
           
             if (radioButton1.Checked)
             {
                 DFS dfs = new DFS(Treasure.getTreasureCount());
-                Console.WriteLine("bangke");
+
                 if (comboBox3.Text == "With TSP")
                 {
                     //
@@ -152,11 +143,9 @@ namespace Tubes2_stima
                     stopwatch.Start();
                     steps = dfs.startSearch(start, true);
                     stopwatch.Stop();
-                    // 
                     string x = "DFS1";
-                    Console.WriteLine("tai");
                     Console.WriteLine(steps);
-                    matrix.walk(player, steps);
+                    matrix.walk(steps);
                     matrix.visualize("./test.png");
                     textBox1.Text = x;
                     textBox2.Text = steps;

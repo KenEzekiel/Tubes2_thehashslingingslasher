@@ -93,10 +93,9 @@
     </Compile>
     <None Include="packages.config" />
     <None Include="config\test.txt" />
-    <Compile Include="src\BFS.cs" />
     <Compile Include="src\DFS.cs" />
     <Compile Include="src\Matrix.cs" />
-    <Compile Include="src\Player.cs" />
+    <Compile Include="src\Position.cs" />
     <Compile Include="src\Block.cs" />
     <None Include="config\after.png" />
     <None Include="config\before.png" />
