@@ -37,6 +37,11 @@ namespace Matrices
             return mat[start.getI(), start.getJ()];
         }
 
+        public Position GetStartPos()
+        {
+            return start;
+        }
+
         public Matrix(string path)
         {
             string[] rows = File.ReadAllLines(path);

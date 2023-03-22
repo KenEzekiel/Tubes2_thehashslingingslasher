@@ -40,7 +40,7 @@ namespace Blocks
 
         public int getNumOfChild() { return this.numOfChild; }
 
-        
+        public abstract bool isTreasure();
     }
 
     class Basic : Block
@@ -88,7 +88,10 @@ namespace Blocks
         public void resetStep() {
             this.stepCount = 0;
         }
-        
+
+        public override bool isTreasure() { return false; }
+
+        public bool isStepped() { return stepCount != 0; }
     }
 
     class Tembok : Block
@@ -124,6 +127,8 @@ namespace Blocks
         {
             return "";
         }
+
+        public override bool isTreasure() { return false; }
     }
 
     class Start : Basic
@@ -137,6 +142,8 @@ namespace Blocks
         {
             return "Start";
         }
+
+        public override bool isTreasure() { return false; }
     }
 
     class Treasure : Basic
@@ -190,5 +197,7 @@ namespace Blocks
         {
             return treasureTaken;
         }
+
+        public override bool isTreasure() { return true; }
     }
 }

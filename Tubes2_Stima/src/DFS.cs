@@ -19,13 +19,13 @@ namespace Tubes2_Stima.src
             this.numOfTreasure = numOfTreasure;
         }
 
-        public override void insertNode(Block n, char a)
+        public void insertNode(Block n, char a)
         {
             (char move, Block node) temp = (a, n);
             this.NodeMoves.Push(temp);
         }
 
-        public override void insertChild(Block n, char lastMove, ref bool notDeadend)
+        public void insertChild(Block n, char lastMove, ref bool notDeadend)
         {
             // Priority : L U R D
             if (n.hasL && !(lastMove == 'R'))
@@ -55,7 +55,7 @@ namespace Tubes2_Stima.src
             return this.NodeMoves.Pop();
         }
 
-        public override string startSearch(Block n, bool TSP)
+        public string startSearch(Block n, bool TSP)
         {
             string moves = "";
             char lastMove = 'S';

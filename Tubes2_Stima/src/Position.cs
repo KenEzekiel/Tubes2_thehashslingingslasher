@@ -69,6 +69,14 @@ namespace Positions
 
         public bool isEqual(Position other) { return this.i == other.i && this.j == other.j; }
 
+        public Position getUPos() { return new Position(this.i - 1, this.j); }
+
+        public Position getDPos() { return new Position(this.i + 1, this.j); }
+
+        public Position getRPos() { return new Position(this.i, this.j + 1); }
+
+        public Position getLPos() { return new Position(this.i, this.j - 1); }
+
         public override string ToString() { return "(" + i.ToString() + ", " + j.ToString() + ")"; }
     }
 }

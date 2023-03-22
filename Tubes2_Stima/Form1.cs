@@ -164,23 +164,46 @@ namespace Tubes2_stima
                 else if (comboBox3.Text == "Without TSP")
                 {
                     string x = "DFS2";
+                    Stopwatch stopwatch = new Stopwatch();
+                    stopwatch.Start();
+                    steps = dfs.startSearch(start, false);
+                    stopwatch.Stop();
+                    Console.WriteLine(steps);
                     // visualisasiin
                     textBox1.Text = x;
+                    textBox2.Text = steps;
+                    textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
                 }
             }
             if (radioButton2.Checked)
             {
+                BFS bfs = new BFS(matrix);
+       
                 if (comboBox3.Text == "With TSP")
                 {
                     string x = "BFS1";
+                    string search = "";
+                    Stopwatch stopwatch = new Stopwatch();
+                    stopwatch.Start();
+                    string step = bfs.Search(true, ref search);
+                    stopwatch.Stop();
                     // visualisasiin
                     textBox1.Text = x;
+                    textBox2.Text = step;
+                    textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
                 }
                 else if (comboBox3.Text == "Without TSP")
                 {
                     string x = "BFS2";
+                    string search = "";
+                    Stopwatch stopwatch = new Stopwatch();
+                    stopwatch.Start();
+                    string step = bfs.Search(false, ref search);
+                    stopwatch.Stop();
                     // visualisasiin
                     textBox1.Text = x;
+                    textBox2.Text = step;
+                    textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
                 }
             }
         }
