@@ -45,7 +45,7 @@ The Breadth-First Search algorithm traverses the node and their children in a FI
 ## Team Member and Responsibilities
 
 | Team Member                |   NIM    | Responsibilities                                                                |
-| -------------------------- | :------: | :-----------------------------------------------------------------------------: |
+| :------------------------- | :------: | :------------------------------------------------------------------------------ |
 | Kenneth Ezekiel Suprantoni | 13521089 | Create graph representation of map matrix and DFS algorithm                     |
 | Chiquita Ahsanunnisa       | 13521129 | Create input handler from file, map visualization, and BFS algorithm            |
 | Vanessa Rebecca Wiyono     | 13521171 | Create GUI and TSP algorithm                                                    |
