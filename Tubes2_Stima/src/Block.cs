@@ -41,6 +41,7 @@ namespace Blocks
         public int getNumOfChild() { return this.numOfChild; }
 
         public abstract bool isTreasure();
+        public abstract bool isTembok();
     }
 
     class Basic : Block
@@ -76,7 +77,7 @@ namespace Blocks
 
         public override Color getColor()
         {
-            int alpha = stepCount * 50 % 255;
+            int alpha = stepCount * 25 % 255;
             return Color.FromArgb(alpha, baseColor.R, baseColor.G, baseColor.B);
         }
 
@@ -92,6 +93,8 @@ namespace Blocks
         public override bool isTreasure() { return false; }
 
         public bool isStepped() { return stepCount != 0; }
+
+        public override bool isTembok() { return false; }
     }
 
     class Tembok : Block
@@ -129,6 +132,8 @@ namespace Blocks
         }
 
         public override bool isTreasure() { return false; }
+
+        public override bool isTembok() { return true; }
     }
 
     class Start : Basic
@@ -199,5 +204,9 @@ namespace Blocks
         }
 
         public override bool isTreasure() { return true; }
+
+        public void resetTaken() { taken = false; }
+
+        public static void resetTreasureTaken() { treasureTaken = 0; }
     }
 }

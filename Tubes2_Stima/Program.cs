@@ -13,11 +13,6 @@ namespace Tubes2_Stima
         [STAThread]
         static void Main()
         {
-            // Matrix b = new Matrix("../../config/test.txt");
-            // Console.WriteLine(b);
-            
-            // b.walk("RUU");
-            // Console.WriteLine(b);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Tubes2_stima.Form1());
