@@ -7,12 +7,15 @@ using Tubes2_Stima.src;
 using System.IO;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows.Forms.VisualStyles;
 
 namespace Tubes2_stima
 {
 
     public partial class Form1 : Form
     {
+        private bool isDone = false;
+        private string filePath;
         //timer buat slider
         private Timer timer = new Timer();
         //private int speed = 200;
@@ -121,8 +124,7 @@ namespace Tubes2_stima
             // debug DFS
             String steps = "";
 
-            String path = "./config/test.txt";
-            Matrices.Matrix matrix = new Matrices.Matrix(path);
+            Matrices.Matrix matrix = new Matrices.Matrix(filePath);
 
 
 
@@ -157,6 +159,7 @@ namespace Tubes2_stima
                     timer.Tick += new EventHandler(DisplayNextImage);
                     //DisplayNextImage(sender, e);
                     timer.Start();
+                    isDone = true;
 
                     //pictureBox2.Image = Image.FromFile("./test.png");
                     //pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -182,7 +185,7 @@ namespace Tubes2_stima
                     timer.Tick += new EventHandler(DisplayNextImage);
                     //DisplayNextImage(sender, e);
                     timer.Start();
-
+                    isDone = true;
                     //pictureBox2.Image = Image.FromFile("./test.png");
                     //pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
                 }
@@ -211,7 +214,7 @@ namespace Tubes2_stima
                     timer.Tick += new EventHandler(DisplayNextImage);
                     //DisplayNextImage(sender, e);
                     timer.Start();
-
+                    isDone = true;
                     //pictureBox2.Image = Image.FromFile("./test.png");
                     //pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
                 }
@@ -235,7 +238,7 @@ namespace Tubes2_stima
                     timer.Tick += new EventHandler(DisplayNextImage);
                     //DisplayNextImage(sender, e);
                     timer.Start();
-
+                    isDone = true;
                     //pictureBox2.Image = Image.FromFile("./test.png");
                     //pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
                 }
@@ -259,8 +262,23 @@ namespace Tubes2_stima
 
         private void button_LoadFile_Click_1(object sender, EventArgs e)
         {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+                openFileDialog.RestoreDirectory = true;
 
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    filePath = openFileDialog.FileName;
+                    Matrices.Matrix matrix = new Matrices.Matrix(filePath);
+                    this.map = matrix;
+                    button1.Enabled = true;
+                    button_LoadFile.Text = Path.GetFileName(filePath); // ganti text jd nama chosen file
+                }
+            }
         }
+
+
 
         //berhub sm speed"an
         private int currentSpeed = 80000;
@@ -278,7 +296,7 @@ namespace Tubes2_stima
         }
 
         // buat nampilin gbr" otomatis keganti dlm 1 folder
-        static string folderPath = "./visualization";
+        static string folderPath = "./visualization/";
         string[] imagePaths = System.IO.Directory.GetFiles(folderPath, "*.png").OrderBy(f => File.GetLastWriteTime(f)).ToArray();
 
         private int currentIndex = 0; // index current image
@@ -286,26 +304,30 @@ namespace Tubes2_stima
 
         private void DisplayNextImage(object sender, EventArgs e)
         {
-            // ada sedikit masalah minor di sini, jadi kalo mo animasi, pastiin gambarnya udah selsai dibikin semua baru klik slider
-            // karna kalo ngga nanti gambarnya kepotong / keluar error out of bounds
-            if (imagePaths == null || imagePaths.Length == 0)
+            if (isDone)
             {
-                MessageBox.Show("Tidak ada gambar :(");
-                return;
+                // ada sedikit masalah minor di sini, jadi kalo mo animasi, pastiin gambarnya udah selsai dibikin semua baru klik slider
+                // karna kalo ngga nanti gambarnya kepotong / keluar error out of bounds
+                if (imagePaths == null || imagePaths.Length == 0)
+                {
+                    MessageBox.Show("Tidak ada gambar :(");
+                    return;
+                }
+
+                // Load image at curr index
+                string imagePath = imagePaths[currentIndex];
+                Image image = Image.FromFile(imagePath);
+
+                pictureBox2.Image = image;
+                pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                currentIndex = (currentIndex + 1) % imagePaths.Length;
+
+                // Reset timer with new speed
+                timer.Interval = currentSpeed;
+                //timer.Start();
             }
 
-            // Load image at curr index
-            string imagePath = imagePaths[currentIndex];
-            Image image = Image.FromFile(imagePath);
-
-            pictureBox2.Image = image;
-            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
-
-            currentIndex = (currentIndex + 1) % imagePaths.Length;
-
-            // Reset timer with new speed
-            timer.Interval = currentSpeed;
-            //timer.Start();
         }
 
         private void label5_Click(object sender, EventArgs e)
