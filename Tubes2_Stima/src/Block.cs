@@ -208,5 +208,12 @@ namespace Blocks
         public void resetTaken() { taken = false; }
 
         public static void resetTreasureTaken() { treasureTaken = 0; }
+
+        public static void resetTreasure()
+        {
+            // only called if map is initialized
+            resetTreasureTaken();
+            treasureCount = 0;
+        }
     }
 }

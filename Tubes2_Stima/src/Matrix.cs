@@ -25,6 +25,8 @@ namespace Matrices
 
         public Matrix(string path)
         {
+            Treasure.resetTreasure();
+            NumOfSteppableNodes = 0;
             string[] rows = File.ReadAllLines(path);
             nRow = rows.Length;
             nCol = rows[0].Length / 2 + 1;
