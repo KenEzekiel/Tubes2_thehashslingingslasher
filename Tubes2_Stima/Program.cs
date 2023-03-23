@@ -1,7 +1,5 @@
-﻿using Matrices;
-using System;
+﻿using System;
 using System.Windows.Forms;
-using Tubes2_Stima.src;
 
 namespace Tubes2_Stima
 {

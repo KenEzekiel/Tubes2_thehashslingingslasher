@@ -3,8 +3,6 @@ using Blocks;
 using Positions;
 using System.Drawing;
 using System.IO;
-using System.Drawing.Text;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Matrices
 {
@@ -14,6 +12,7 @@ namespace Matrices
         private Block[,] mat;
         private Position start;
         public static int NumOfSteppableNodes = 0;
+        private const string assetsPath = "./assets/";
 
         public Matrix(int rows, int cols)
         {
@@ -136,7 +135,7 @@ namespace Matrices
             {
                 for (int j = 0; j < nCol; j++) {
                     if (this.mat[i, j].canStep())
-                    ((Basic)this.mat[i, j]).resetStep();
+                        ((Basic)this.mat[i, j]).resetStep();
                 }
             }
 
@@ -151,7 +150,7 @@ namespace Matrices
                     if (this.mat[i, j].canStep())
                     {
                         ((Basic)this.mat[i, j]).resetStep();
-                        if (this.mat[i, j].isTreasure()) 
+                        if (this.mat[i, j].isTreasure())
                         {
                             ((Treasure)this.mat[i, j]).resetTaken();
                         }
@@ -211,201 +210,139 @@ namespace Matrices
         }
 
         // VISUALIZATION
+        const int squareSize = 200;
+        const int pad = 20;
+        const int sidePad = 20;
 
-        public void animateWalk(string folderPath, string walkPath)
+        public void animateWalk(string folderPath, string walkPath, string playerPath)
         {
             resetEverything();
 
-            int squareSize, pad, minHeight, minWidth, sidePad, currX, currY;
-            squareSize = 200;
-            pad = 20;
-            sidePad = 20;
+            int minHeight, minWidth;
 
             minHeight = nRow * squareSize + (nRow - 1) * pad + 2 * sidePad;
             minWidth = nCol * squareSize + (nCol - 1) * pad + 2 * sidePad;
-            currX = sidePad;
-            currY = sidePad;
 
             Bitmap image = new Bitmap(minWidth, minHeight);
             Graphics graphic = Graphics.FromImage(image);
 
-            SolidBrush baseBrush = new SolidBrush(Color.Black);
-
-            Rectangle baseRect = new Rectangle(0, 0, minWidth, minHeight);
-            graphic.FillRectangle(baseBrush, baseRect);
-
-            int fontSize = 32;
-            var fontFamily = new FontFamily("Arial");
-            var font = new Font(fontFamily, fontSize, FontStyle.Regular, GraphicsUnit.Pixel);
-            var textBrush = new SolidBrush(Color.Black);
-            graphic.TextRenderingHint = TextRenderingHint.AntiAlias;
-
-            StringFormat stringFormat = new StringFormat();
-            stringFormat.Alignment = StringAlignment.Center;
-            stringFormat.LineAlignment = StringAlignment.Center;
-
-            for (int i = 0; i < nRow; i++)
-            {
-                for (int j = 0; j < nCol; j++)
-                {
-                    if (!mat[i, j].isTembok())
-                    {
-                        SolidBrush baseBlockBrush = new SolidBrush(Color.White);
-
-                        Rectangle baseBlockRect = new Rectangle(currX, currY, squareSize, squareSize);
-                        graphic.FillRectangle(baseBlockBrush, baseBlockRect);
-
-                        graphic.DrawString(mat[i, j].getInfo(), font, textBrush, baseBlockRect, stringFormat);
-                    }
-                    currX += (pad + squareSize);
-                }
-                currX = sidePad;
-                currY += (pad + squareSize);
-            }
+            visualize(ref graphic);
 
             Position curr = new Position(this.start);
-            rerenderPtr(ref graphic, curr);
+            stepAt(curr);
+            rerenderPtr(ref graphic, curr, playerPath);
             Position prev = new Position(curr);
             image.Save(folderPath + (1).ToString() + ".png", System.Drawing.Imaging.ImageFormat.Png);
+
             for (int i = 0; i < walkPath.Length; i++)
             {
-                rerenderAt(ref graphic, prev);
+                rerenderAt(ref graphic, prev, false);
                 curr.move(walkPath[i]);
                 stepAt(curr);
-                rerenderPtr(ref graphic, curr);
+                rerenderPtr(ref graphic, curr, playerPath);
                 prev.setI(curr.getI());
                 prev.setJ(curr.getJ());
                 image.Save(folderPath + (i + 2).ToString() + ".png", System.Drawing.Imaging.ImageFormat.Png);
             }
-            image.Dispose();
         }
 
-        public void rerenderPtr(ref Graphics graphic, Position p)
+        public void rerenderPtr(ref Graphics graphic, Position p, string playerPath)
         {
-            int squareSize, pad, sidePad;
-            squareSize = 200;
-            pad = 20;
-            sidePad = 20;
+            int i, j, currX, currY;
+            i = p.getI();
+            j = p.getJ();
+            currX = sidePad + j * (pad + squareSize);
+            currY = sidePad + i * (pad + squareSize);
+
+            Image player = resizeImage(Image.FromFile(assetsPath + playerPath), new Size(squareSize, squareSize));
+            graphic.DrawImage(player, new Point(currX, currY));
+        }
+
+        public void rerenderAt(ref Graphics graphic, Position p, bool alphaOn)
+        {
             int i = p.getI();
             int j = p.getJ();
 
-            int currX = sidePad + j * (pad + squareSize);
-            int currY = sidePad + i * (pad + squareSize);
+            Image baseBlock = resizeImage(Image.FromFile(assetsPath + "baseblock.png"), new Size(squareSize, squareSize));
+            Image closedTreasure = resizeImage(Image.FromFile(assetsPath + "chest-closed.png"), new Size(squareSize, squareSize));
+            Image openedTreasure = resizeImage(Image.FromFile(assetsPath + "chest-opened.png"), new Size(squareSize, squareSize));
+            Image startBlock = resizeImage(Image.FromFile(assetsPath + "start.png"), new Size(squareSize, squareSize));
 
-            int fontSize = 32;
-            var fontFamily = new FontFamily("Arial");
-            var font = new Font(fontFamily, fontSize, FontStyle.Regular, GraphicsUnit.Pixel);
-            var textBrush = new SolidBrush(Color.Black);
-            graphic.TextRenderingHint = TextRenderingHint.AntiAlias;
+            if (!this.mat[i, j].isTembok())
+            {
+                Point currPoint = new Point(sidePad + j * (pad + squareSize), sidePad + i * (pad + squareSize));
 
-            StringFormat stringFormat = new StringFormat();
-            stringFormat.Alignment = StringAlignment.Center;
-            stringFormat.LineAlignment = StringAlignment.Center;
-            SolidBrush baseBlockBrush = new SolidBrush(Color.White);
+                graphic.DrawImage(baseBlock, currPoint);
 
-            SolidBrush blockBrush = new SolidBrush(Color.Red);
+                SolidBrush stepBrush;
+                if (((Basic)this.mat[i, j]).isStepped())
+                {
+                    if (alphaOn)
+                    {
+                        stepBrush = new SolidBrush(this.mat[i, j].getColor()); // TODO: change to better color
+                    } else
+                    {
+                        stepBrush = new SolidBrush(Color.FromArgb(50, 255, 0, 0)); // TODO: change to better color
+                    }
 
-            Rectangle baseBlockRect = new Rectangle(currX, currY, squareSize, squareSize);
-            graphic.FillRectangle(baseBlockBrush, baseBlockRect);
-
-            Rectangle blockRect = new Rectangle(currX, currY, squareSize, squareSize);
-            graphic.FillRectangle(blockBrush, blockRect);
-
-            graphic.DrawString(mat[i, j].getInfo(), font, textBrush, blockRect, stringFormat);
+                    Rectangle stepRect = new Rectangle(currPoint, new Size(squareSize, squareSize));
+                    graphic.FillRectangle(stepBrush, stepRect);
+                }
+                
+                if (this.mat[i, j].isTreasure())
+                {
+                    if (((Treasure)this.mat[i, j]).isTaken())
+                    {
+                        graphic.DrawImage(openedTreasure, currPoint);
+                    }
+                    else
+                    {
+                        graphic.DrawImage(closedTreasure, currPoint);
+                    }
+                }
+                else if (i == this.start.getI() && j == this.start.getJ())
+                {
+                    graphic.DrawImage(startBlock, currPoint);
+                }
+            }
         }
 
-        public void rerenderAt(ref Graphics graphic, Position p)
-        {
-            int squareSize, pad, sidePad;
-            squareSize = 200;
-            pad = 20;
-            sidePad = 20;
-            int i = p.getI();
-            int j = p.getJ();
-
-            int currX = sidePad + j * (pad + squareSize);
-            int currY = sidePad + i * (pad + squareSize);
-
-            int fontSize = 32;
-            var fontFamily = new FontFamily("Arial");
-            var font = new Font(fontFamily, fontSize, FontStyle.Regular, GraphicsUnit.Pixel);
-            var textBrush = new SolidBrush(Color.Black);
-            graphic.TextRenderingHint = TextRenderingHint.AntiAlias;
-
-            StringFormat stringFormat = new StringFormat();
-            stringFormat.Alignment = StringAlignment.Center;
-            stringFormat.LineAlignment = StringAlignment.Center;
-            SolidBrush baseBlockBrush = new SolidBrush(Color.White);
-
-            // SolidBrush blockBrush = new SolidBrush(mat[i, j].getColor());
-            SolidBrush blockBrush = new SolidBrush(Color.LightBlue);
-
-            Rectangle baseBlockRect = new Rectangle(currX, currY, squareSize, squareSize);
-            graphic.FillRectangle(baseBlockBrush, baseBlockRect);
-
-            Rectangle blockRect = new Rectangle(currX, currY, squareSize, squareSize);
-            graphic.FillRectangle(blockBrush, blockRect);
-
-            graphic.DrawString(mat[i, j].getInfo(), font, textBrush, blockRect, stringFormat);
-        }
         public void visualize(string path)
         {
-            int squareSize, pad, minHeight, minWidth, sidePad, currX, currY;
-            squareSize = 200;
-            pad = 20;
-            sidePad = 20;
-
-            minHeight = nRow * squareSize + (nRow - 1) * pad + 2 * sidePad;
-            minWidth = nCol * squareSize + (nCol - 1) * pad + 2 * sidePad;
-            currX = sidePad;
-            currY = sidePad;
+            int minHeight = nRow * squareSize + (nRow - 1) * pad + 2 * sidePad;
+            int minWidth = nCol * squareSize + (nCol - 1) * pad + 2 * sidePad;
 
             Bitmap image = new Bitmap(minWidth, minHeight);
             Graphics graphic = Graphics.FromImage(image);
 
-            SolidBrush baseBrush = new SolidBrush(Color.Black);
+            visualize(ref graphic);
 
-            Rectangle baseRect = new Rectangle(0, 0, minWidth, minHeight);
-            graphic.FillRectangle(baseBrush, baseRect);
+            image.Save(path, System.Drawing.Imaging.ImageFormat.Png);
+        }
 
-            int fontSize = 32;
-            var fontFamily = new FontFamily("Arial");
-            var font = new Font(fontFamily, fontSize, FontStyle.Regular, GraphicsUnit.Pixel);
-            var textBrush = new SolidBrush(Color.Black);
-            graphic.TextRenderingHint = TextRenderingHint.AntiAlias;
+        public void visualize(ref Graphics graphic)
+        {
+            int minHeight = nRow * squareSize + (nRow - 1) * pad + 2 * sidePad;
+            int minWidth = nCol * squareSize + (nCol - 1) * pad + 2 * sidePad;
 
-            StringFormat stringFormat = new StringFormat();
-            stringFormat.Alignment = StringAlignment.Center;
-            stringFormat.LineAlignment = StringAlignment.Center;
-            
+            Image bg = new Bitmap(assetsPath + "background.png");
+            TextureBrush tBrush = new TextureBrush(bg);
+            graphic.FillRectangle(tBrush, new Rectangle(0, 0, minWidth, minHeight));
+
             for (int i = 0; i < nRow; i++)
             {
                 for (int j = 0; j < nCol; j++)
                 {
-
-                    SolidBrush baseBlockBrush = new SolidBrush(Color.White);
-
-                    SolidBrush blockBrush = new SolidBrush(mat[i, j].getColor());
-
-                    Rectangle baseBlockRect = new Rectangle(currX, currY, squareSize, squareSize);
-                    graphic.FillRectangle(baseBlockBrush, baseBlockRect);
-
-                    Rectangle blockRect = new Rectangle(currX, currY, squareSize, squareSize);
-                    graphic.FillRectangle(blockBrush, blockRect);
-
-                    graphic.DrawString(mat[i, j].getInfo(), font, textBrush, blockRect, stringFormat);
-                    currX += (pad + squareSize);
+                    rerenderAt(ref graphic, new Position(i, j), true);
                 }
-                currX = sidePad;
-                currY += (pad + squareSize);
             }
-            image.Save(path, System.Drawing.Imaging.ImageFormat.Png);
-            image.Dispose();
         }
 
         public void visualizeAll(string folderPath, string route, string search)
         {
             // clean directory
+            Directory.CreateDirectory(folderPath);
+
             DirectoryInfo di = new DirectoryInfo(folderPath);
 
             foreach (FileInfo file in di.GetFiles())
@@ -417,18 +354,26 @@ namespace Matrices
                 dir.Delete(true);
             }
 
+            // select player randomly
+            string[] playersPath = { "gary.png", "mrkrabs.png", "patrick.png", "plankton.png", "sandy.png", "squidward.png" };
+            Random rnd = new Random();
+            string player = playersPath[rnd.Next(playersPath.Length)];
+
             // visualize kosong (belom diapa-apain, 1 gambar)
             resetEverything();
             visualize(folderPath + "0.png");
 
-            // visualize search (len(search) + 1 gambar)
-            animateWalk(folderPath, search);
+            //// visualize search (len(search) + 1 gambar)
+            animateWalk(folderPath, search, player);
 
             // visualize route (1 gambar)
             walk(route);
-            visualize(folderPath + (search.Length + 1).ToString() + ".png");
+            visualize(folderPath + (search.Length + 2).ToString() + ".png");
+        }
 
-            
+        public static Image resizeImage(Image imgToResize, Size size)
+        {
+            return new Bitmap(imgToResize, size);
         }
     }
 }
