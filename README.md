@@ -56,8 +56,8 @@ The Breadth-First Search algorithm traverses the node and their children in a FI
 chi nitip: kasih note ya cuman bisa dijalanin di platform windows
 
 ## Libraries Used
+* System.Random
 * System.Drawing
-* System.Drawing.Text
 * System.Collections.Generic
 * System.IO
 * System.Windows.Forms
