@@ -12,7 +12,7 @@ namespace Matrices
         private Block[,] mat;
         private Position start;
         public static int NumOfSteppableNodes = 0;
-        private const string assetsPath = "./assets/";
+        private const string assetsPath = "../../assets/";
 
         public Matrix(int rows, int cols)
         {

@@ -8,6 +8,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms.VisualStyles;
+using System.Threading.Tasks;
 
 namespace Tubes2_stima
 {
@@ -37,7 +38,7 @@ namespace Tubes2_stima
         public Form1()
         {
             InitializeComponent();
-            button1.Enabled = true;
+            button1.Enabled = false;
 
         }
 
@@ -48,7 +49,7 @@ namespace Tubes2_stima
 
         private void label1_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("Kelompok Thehashslingingslasher\nKenneth Ezekiel\nChiquita Ahsanunnisa\nVanessa Rebecca");
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -99,18 +100,8 @@ namespace Tubes2_stima
 
         }
 
-        private void button_LoadFile_Click(object sender, EventArgs e)
-        {
-            String path = "./config/test.txt";
-            Matrices.Matrix matrix = new Matrices.Matrix(path);
-            this.map = matrix;
-
-            button1.Enabled = true;
-        }
-
         private void label7_Click_1(object sender, EventArgs e)
         {
-            // Steps
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
@@ -118,10 +109,19 @@ namespace Tubes2_stima
 
         }
 
+        bool stopVisualize = true;
         private void button1_Click(object sender, EventArgs e)
         {
             // Start search
             // debug DFS
+            
+            if (!stopVisualize)
+            {
+                MessageBox.Show("Wait for the visualization to finish!");
+                return;
+            } 
+            
+
             String steps = "";
 
             Matrices.Matrix matrix = new Matrices.Matrix(filePath);
@@ -149,20 +149,11 @@ namespace Tubes2_stima
                     Console.WriteLine(steps);
                     // visualisasi disimpen di folder visualization
                     // urutan: belom diapa2in, search (animasi), route
-                    matrix.visualizeAll("./visualization/", steps, steps);
+                    matrix.visualizeAll("../../visualization/", steps, steps);
                     textBox1.Text = x;
                     textBox2.Text = steps;
                     textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
-
-                    //timer.Interval = currentSpeed / speed;
-                    timer.Interval = currentSpeed;
-                    timer.Tick += new EventHandler(DisplayNextImage);
-                    //DisplayNextImage(sender, e);
-                    timer.Start();
                     isDone = true;
-
-                    //pictureBox2.Image = Image.FromFile("./test.png");
-                    //pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
 
                 }
                 else if (comboBox3.Text == "Without TSP")
@@ -175,19 +166,13 @@ namespace Tubes2_stima
                     Console.WriteLine(steps);
                     // visualisasi disimpen di folder visualization
                     // urutan: belom diapa2in, search (animasi), route
-                    matrix.visualizeAll("./visualization/", steps, steps);
+                    matrix.visualizeAll("../../visualization/", steps, steps);
                     textBox1.Text = x;
                     textBox2.Text = steps;
                     textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
-
-                    //timer.Interval = currentSpeed / speed;
-                    timer.Interval = currentSpeed;
-                    timer.Tick += new EventHandler(DisplayNextImage);
-                    //DisplayNextImage(sender, e);
-                    timer.Start();
                     isDone = true;
-                    //pictureBox2.Image = Image.FromFile("./test.png");
-                    //pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+
+
                 }
             }
             if (radioButton2.Checked)
@@ -204,19 +189,12 @@ namespace Tubes2_stima
                     stopwatch.Stop();
                     // visualisasi disimpen di folder visualization
                     // urutan: belom diapa2in, search (animasi), route
-                    matrix.visualizeAll("./visualization/", step, search);
+                    matrix.visualizeAll("../../visualization/", step, search);
                     textBox1.Text = x;
                     textBox2.Text = step;
                     textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
-
-                    //timer.Interval = currentSpeed / speed;
-                    timer.Interval = currentSpeed;
-                    timer.Tick += new EventHandler(DisplayNextImage);
-                    //DisplayNextImage(sender, e);
-                    timer.Start();
                     isDone = true;
-                    //pictureBox2.Image = Image.FromFile("./test.png");
-                    //pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+
                 }
                 else if (comboBox3.Text == "Without TSP")
                 {
@@ -228,21 +206,15 @@ namespace Tubes2_stima
                     stopwatch.Stop();
                     // visualisasi disimpen di folder visualization
                     // urutan: belom diapa2in, search (animasi), route
-                    matrix.visualizeAll("./visualization/", step, search);
+                    matrix.visualizeAll("../../visualization/", step, search);
                     textBox1.Text = x;
                     textBox2.Text = step;
                     textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
-
-                    //timer.Interval = currentSpeed / speed;
-                    timer.Interval = currentSpeed;
-                    timer.Tick += new EventHandler(DisplayNextImage);
-                    //DisplayNextImage(sender, e);
-                    timer.Start();
                     isDone = true;
-                    //pictureBox2.Image = Image.FromFile("./test.png");
-                    //pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+
                 }
             }
+            
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -284,7 +256,7 @@ namespace Tubes2_stima
         private int currentSpeed = 80000;
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            int[] speedValues = { 12800, 6400, 3200, 1600, 800, 400, 200, 100, 50 };
+            int[] speedValues = { 12000, 1000, 8000, 6000, 4000, 3000, 2000, 1000, 500 };
 
             // nyocokin index sm speed
             int selectedIndex = trackBar1.Value - 1;
@@ -292,40 +264,47 @@ namespace Tubes2_stima
             {
                 currentSpeed = speedValues[selectedIndex];
             }
-            timer.Interval = currentSpeed;
         }
 
         // buat nampilin gbr" otomatis keganti dlm 1 folder
-        static string folderPath = "./visualization/";
-        string[] imagePaths = System.IO.Directory.GetFiles(folderPath, "*.png").OrderBy(f => File.GetLastWriteTime(f)).ToArray();
+        static string folderPath = "../../visualization/";
+        
 
         private int currentIndex = 0; // index current image
 
 
-        private void DisplayNextImage(object sender, EventArgs e)
+        private async void displayImage()
         {
             if (isDone)
             {
+                string[] imagePaths = System.IO.Directory.GetFiles(folderPath, "*.png").OrderBy(f => File.GetLastWriteTime(f)).ToArray();
                 // ada sedikit masalah minor di sini, jadi kalo mo animasi, pastiin gambarnya udah selsai dibikin semua baru klik slider
                 // karna kalo ngga nanti gambarnya kepotong / keluar error out of bounds
                 if (imagePaths == null || imagePaths.Length == 0)
                 {
                     MessageBox.Show("Tidak ada gambar :(");
                     return;
+                } else
+                {
+                    Console.WriteLine(imagePaths);
+                    foreach(string img in imagePaths)
+                    {
+                        // Load image at curr index
+
+                        Image image = Image.FromFile(img);
+
+                        pictureBox2.Image = image;
+                        pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                        await Task.Delay(TimeSpan.FromSeconds(currentSpeed / 1000));
+                        if (stopVisualize)
+                        {
+                            pictureBox2.Image = null;
+                            break;
+                        }
+                    }
+                    
                 }
-
-                // Load image at curr index
-                string imagePath = imagePaths[currentIndex];
-                Image image = Image.FromFile(imagePath);
-
-                pictureBox2.Image = image;
-                pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
-
-                currentIndex = (currentIndex + 1) % imagePaths.Length;
-
-                // Reset timer with new speed
-                timer.Interval = currentSpeed;
-                //timer.Start();
             }
 
         }
@@ -337,6 +316,26 @@ namespace Tubes2_stima
 
         private void label4_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            // Visualize
+
+            Console.WriteLine("Visualizer");
+            stopVisualize = !stopVisualize;
+
+            if (!stopVisualize)
+            {
+                displayImage();
+            }
+            
 
         }
     }
