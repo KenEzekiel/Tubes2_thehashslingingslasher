@@ -52,7 +52,7 @@ namespace Blocks
         public Basic()
         {
             this.stepCount = 0;
-            this.baseColor = ColorTranslator.FromHtml("#FF0000"); // TODO: change to better color
+            this.baseColor = ColorTranslator.FromHtml("#FF0000");
         }
 
         public int getStepCount()
@@ -77,7 +77,7 @@ namespace Blocks
 
         public override Color getColor()
         {
-            int alpha = stepCount * 30 % 255; // TODO: change to better color
+            int alpha = stepCount * 40 % 255;
             return Color.FromArgb(alpha, baseColor.R, baseColor.G, baseColor.B);
         }
 

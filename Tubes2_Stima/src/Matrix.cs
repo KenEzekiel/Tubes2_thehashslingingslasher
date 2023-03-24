@@ -279,10 +279,10 @@ namespace Matrices
                 {
                     if (alphaOn)
                     {
-                        stepBrush = new SolidBrush(this.mat[i, j].getColor()); // TODO: change to better color
+                        stepBrush = new SolidBrush(this.mat[i, j].getColor());
                     } else
                     {
-                        stepBrush = new SolidBrush(Color.FromArgb(50, 255, 0, 0)); // TODO: change to better color
+                        stepBrush = new SolidBrush(Color.FromArgb(50, 255, 0, 0));
                     }
 
                     Rectangle stepRect = new Rectangle(currPoint, new Size(squareSize, squareSize));
