@@ -164,7 +164,7 @@ namespace Matrices
             int NumOfSteppedNodes = 0;
             for (int i = 0; i < nRow; i++) {
                 for (int j = 0; j < nCol; j++) {
-                    if (((Basic)this.mat[i, j]).getStepCount() > 0) {
+                    if (this.mat[i,j].canStep() &&(((Basic)this.mat[i, j]).getStepCount() > 0)) {
                         NumOfSteppedNodes++;
                     }
                 }

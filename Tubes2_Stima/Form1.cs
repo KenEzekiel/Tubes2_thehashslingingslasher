@@ -153,7 +153,7 @@ namespace Tubes2_stima
                         // urutan: belom diapa2in, search (animasi), route
                         temp.visualizeAll("../../visualization/", steps, search);
                         textBox1.Text = x;
-                        textBox2.Text = steps;
+                        textBox2.Text = steps.Length == 0 ? "No Path Found" : steps;
                         textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
                         isDone = true;
                         textBox4.Text = (temp.GetNumOfSteppedNodes().ToString());
@@ -172,7 +172,7 @@ namespace Tubes2_stima
                         // urutan: belom diapa2in, search (animasi), route
                         temp.visualizeAll("../../visualization/", steps, search);
                         textBox1.Text = x;
-                        textBox2.Text = steps;
+                        textBox2.Text = steps.Length == 0 ? "No Path Found" : steps;
                         textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
                         isDone = true;
                         textBox4.Text = (temp.GetNumOfSteppedNodes().ToString());
@@ -195,7 +195,7 @@ namespace Tubes2_stima
                         // urutan: belom diapa2in, search (animasi), route
                         matrix.visualizeAll("../../visualization/", steps, search);
                         textBox1.Text = x;
-                        textBox2.Text = steps;
+                        textBox2.Text = Treasure.getTreasureTaken() == Treasure.getTreasureCount() ? steps : steps + "- No Path Found";
                         textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
                         isDone = true;
                         textBox4.Text = (temp.GetNumOfSteppedNodes().ToString());
@@ -213,7 +213,7 @@ namespace Tubes2_stima
                         // urutan: belom diapa2in, search (animasi), route
                         temp.visualizeAll("../../visualization/", steps, search);
                         textBox1.Text = x;
-                        textBox2.Text = steps;
+                        textBox2.Text = Treasure.getTreasureTaken() == Treasure.getTreasureCount() ? steps : steps + "- No Path Found";
                         textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
                         isDone = true;
                         textBox4.Text = (temp.GetNumOfSteppedNodes().ToString());
@@ -304,7 +304,6 @@ namespace Tubes2_stima
                         Image image = Image.FromFile(img);
 
                         pictureBox2.Image = image;
-                        pictureBox2.Load(img);
                         pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
 
                         await Task.Delay(TimeSpan.FromMilliseconds(currentSpeed));
