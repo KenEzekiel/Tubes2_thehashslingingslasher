@@ -101,8 +101,24 @@ The Breadth-First Search algorithm traverses the node and their children in a FI
 ## Running The Program
 (P.S. program hanya bisa dijalankan pada platform windows)
 
+```
 1. Buka folder bin/Release pada folder repositori
 2. Jalankan file Tubes2_Stima.exe
+```
+
+Setelah berada pada aplikasi, berikut langkah-langkah yang perlu dilakukan:
+```
+1. Masukkan file dengan tombol filename
+2. Pilih algoritma (DFS/BFS)
+3. Pilih menggunakan TSP atau tidak
+4. Tekan tombol search
+5. Setelah tulisan pada routes, execution time, nodes, dan step muncul, lakukan penggeseran pada slider untuk mengatur delay time visualisasi
+6. Tekan tombol visualisasi
+7. Jika visualisasi sudah selesai atau ingin diulang, tekan tombol visualisasi lagi untuk mematikan, dan sekali lagi untuk menyalakan kembali
+8. Pengaturan kecepatan animasi bisa dilakukan ditengah visualisasi
+9. Jika sudah selesai, tekan tombol visualisasi kembali, bagian gambar akan hilang menjadi warna coklat
+10. Ulangi langkah 1 untuk pencarian berikutnya
+```
 
 ## Libraries Used
 * System.Random
