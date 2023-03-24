@@ -51,7 +51,7 @@ The Breadth-First Search algorithm traverses the node and their children in a FI
 | Vanessa Rebecca Wiyono     | 13521171 | Create GUI and TSP algorithm                                                    |
 
 ## Program Structure
-'''
+``` 
 .
 |   .gitattributes
 │   .gitignore
@@ -95,7 +95,7 @@ The Breadth-First Search algorithm traverses the node and their children in a FI
 |   |  Tubes2_Stima.csproj
 |   |  packages.config
 |   |  treasure.ico
-'''
+``` 
 
 ## Running The Program
 (P.S. program hanya bisa dijalankan pada platform windows)
