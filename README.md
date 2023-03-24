@@ -97,9 +97,10 @@ The Breadth-First Search algorithm traverses the node and their children in a FI
 
 
 ## Running The Program
+(P.S. program hanya bisa dijalankan pada platform windows)
+
 1. Buka folder bin/Release pada folder repositori
 2. Jalankan file Tubes2_Stima.exe
-P.S. program hanya bisa dijalankan pada platform windows
 
 ## Libraries Used
 * System.Random
