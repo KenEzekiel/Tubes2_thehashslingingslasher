@@ -116,109 +116,110 @@ namespace Tubes2_stima
         {
             // Start search
             // debug DFS
-            
+
             if (!stopVisualize)
             {
                 MessageBox.Show("Wait for the visualization to finish!");
                 return;
-            } 
-            
-
-
-            Matrices.Matrix matrix = new Matrices.Matrix(filePath);
-            temp = matrix;
-
-
-            Console.WriteLine(matrix.ToString());
-
-            Block start = matrix.GetStart();
-
-
-
-            if (radioButton1.Checked)
-            {
-                DFS dfs = new DFS(Treasure.getTreasureCount());
-
-                if (comboBox3.Text == "With TSP")
-                {
-                    //
-                    Stopwatch stopwatch = new Stopwatch();
-                    stopwatch.Start();
-                    string steps = dfs.startSearch(start, true);
-                    stopwatch.Stop();
-                    string x = "DFS1";
-                    Console.WriteLine(steps);
-                    string search = steps;
-                    // visualisasi disimpen di folder visualization
-                    // urutan: belom diapa2in, search (animasi), route
-                    temp.visualizeAll("../../visualization/", steps, search);
-                    textBox1.Text = x;
-                    textBox2.Text = steps;
-                    textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
-                    isDone = true;
-                    textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
-                    textBox5.Text = steps.Length.ToString();
-                }
-                else if (comboBox3.Text == "Without TSP")
-                {
-                    string x = "DFS2";
-                    Stopwatch stopwatch = new Stopwatch();
-                    stopwatch.Start();
-                    string steps = dfs.startSearch(start, false);
-                    stopwatch.Stop();
-                    Console.WriteLine(steps);
-                    string search = steps;
-                    // visualisasi disimpen di folder visualization
-                    // urutan: belom diapa2in, search (animasi), route
-                    temp.visualizeAll("../../visualization/", steps, search);
-                    textBox1.Text = x;
-                    textBox2.Text = steps;
-                    textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
-                    isDone = true;
-                    textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
-                    textBox5.Text = steps.Length.ToString();
-                }
             }
-            if (radioButton2.Checked)
+            else
             {
-                BFS bfs = new BFS(matrix);
 
-                if (comboBox3.Text == "With TSP")
+                Matrices.Matrix matrix = new Matrices.Matrix(filePath);
+                temp = matrix;
+
+
+                Console.WriteLine(matrix.ToString());
+
+                Block start = matrix.GetStart();
+
+
+
+                if (radioButton1.Checked)
                 {
-                    string x = "BFS1";
-                    string search = "";
-                    Stopwatch stopwatch = new Stopwatch();
-                    stopwatch.Start();
-                    string steps = bfs.Search(true, ref search);
-                    stopwatch.Stop();
-                    // visualisasi disimpen di folder visualization
-                    // urutan: belom diapa2in, search (animasi), route
-                    matrix.visualizeAll("../../visualization/", steps, search);
-                    textBox1.Text = x;
-                    textBox2.Text = steps;
-                    textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
-                    isDone = true;
-                    textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
-                    textBox5.Text = steps.Length.ToString();
+                    DFS dfs = new DFS(Treasure.getTreasureCount());
+
+                    if (comboBox3.Text == "With TSP")
+                    {
+                        //
+                        Stopwatch stopwatch = new Stopwatch();
+                        stopwatch.Start();
+                        string steps = dfs.startSearch(start, true);
+                        stopwatch.Stop();
+                        string x = "DFS1";
+                        Console.WriteLine(steps);
+                        string search = steps;
+                        // visualisasi disimpen di folder visualization
+                        // urutan: belom diapa2in, search (animasi), route
+                        temp.visualizeAll("../../visualization/", steps, search);
+                        textBox1.Text = x;
+                        textBox2.Text = steps;
+                        textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
+                        isDone = true;
+                        textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
+                        textBox5.Text = steps.Length.ToString();
+                    }
+                    else if (comboBox3.Text == "Without TSP")
+                    {
+                        string x = "DFS2";
+                        Stopwatch stopwatch = new Stopwatch();
+                        stopwatch.Start();
+                        string steps = dfs.startSearch(start, false);
+                        stopwatch.Stop();
+                        Console.WriteLine(steps);
+                        string search = steps;
+                        // visualisasi disimpen di folder visualization
+                        // urutan: belom diapa2in, search (animasi), route
+                        temp.visualizeAll("../../visualization/", steps, search);
+                        textBox1.Text = x;
+                        textBox2.Text = steps;
+                        textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
+                        isDone = true;
+                        textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
+                        textBox5.Text = steps.Length.ToString();
+                    }
                 }
-                else if (comboBox3.Text == "Without TSP")
+                if (radioButton2.Checked)
                 {
-                    string x = "BFS2";
-                    string search = "";
-                    Stopwatch stopwatch = new Stopwatch();
-                    stopwatch.Start();
-                    string steps = bfs.Search(false, ref search);
-                    stopwatch.Stop();
-                    // visualisasi disimpen di folder visualization
-                    // urutan: belom diapa2in, search (animasi), route
-                    temp.visualizeAll("../../visualization/", steps, search);
-                    textBox1.Text = x;
-                    textBox2.Text = steps;
-                    textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
-                    isDone = true;
-                    textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
-                    textBox5.Text = steps.Length.ToString();
-                    
+                    BFS bfs = new BFS(matrix);
+
+                    if (comboBox3.Text == "With TSP")
+                    {
+                        string x = "BFS1";
+                        string search = "";
+                        Stopwatch stopwatch = new Stopwatch();
+                        stopwatch.Start();
+                        string steps = bfs.Search(true, ref search);
+                        stopwatch.Stop();
+                        // visualisasi disimpen di folder visualization
+                        // urutan: belom diapa2in, search (animasi), route
+                        matrix.visualizeAll("../../visualization/", steps, search);
+                        textBox1.Text = x;
+                        textBox2.Text = steps;
+                        textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
+                        isDone = true;
+                        textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
+                        textBox5.Text = steps.Length.ToString();
+                    }
+                    else if (comboBox3.Text == "Without TSP")
+                    {
+                        string x = "BFS2";
+                        string search = "";
+                        Stopwatch stopwatch = new Stopwatch();
+                        stopwatch.Start();
+                        string steps = bfs.Search(false, ref search);
+                        stopwatch.Stop();
+                        // visualisasi disimpen di folder visualization
+                        // urutan: belom diapa2in, search (animasi), route
+                        temp.visualizeAll("../../visualization/", steps, search);
+                        textBox1.Text = x;
+                        textBox2.Text = steps;
+                        textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
+                        isDone = true;
+                        textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
+                        textBox5.Text = steps.Length.ToString();
+
+                    }
                 }
             }
             
@@ -260,10 +261,10 @@ namespace Tubes2_stima
 
 
         //berhub sm speed"an
-        private int currentSpeed = 80000;
+        private int currentSpeed = 5000;
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            int[] speedValues = { 12000, 1000, 8000, 6000, 4000, 3000, 2000, 1000, 500 };
+            int[] speedValues = { 8000, 6000, 4000, 3000, 2000, 1000, 500, 200, 100 };
 
             // nyocokin index sm speed
             int selectedIndex = trackBar1.Value - 1;
@@ -294,16 +295,19 @@ namespace Tubes2_stima
                 } else
                 {
                     Console.WriteLine(imagePaths);
+                    pictureBox2.Image = Image.FromFile(imagePaths[0]);
                     foreach(string img in imagePaths)
                     {
+                        Console.WriteLine(img);
                         // Load image at curr index
 
                         Image image = Image.FromFile(img);
 
                         pictureBox2.Image = image;
+                        pictureBox2.Load(img);
                         pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
 
-                        await Task.Delay(TimeSpan.FromSeconds(currentSpeed / 1000));
+                        await Task.Delay(TimeSpan.FromMilliseconds(currentSpeed));
                         image.Dispose();
                         if (stopVisualize)
                         {
@@ -311,6 +315,7 @@ namespace Tubes2_stima
                             pictureBox2.Image = null;
                             break;
                         }
+                        
                     }
                     
                 }
@@ -343,7 +348,6 @@ namespace Tubes2_stima
 
             if (!stopVisualize)
             {
-                pictureBox2.Image = Image.FromFile("../../assets/banner.jpg");
                 displayImage();
                 
             }

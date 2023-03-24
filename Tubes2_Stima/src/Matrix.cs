@@ -367,6 +367,10 @@ namespace Matrices
             if (search.Length < 200)
             {
                 animateWalk(folderPath, search, player);
+            } else
+            {
+                string temp = search[0].ToString();
+                animateWalk(folderPath, temp, player);
             }
             
 
