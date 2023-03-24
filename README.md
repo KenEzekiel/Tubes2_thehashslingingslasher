@@ -60,42 +60,43 @@ The Breadth-First Search algorithm traverses the node and their children in a FI
 |    Tubes2_stima.sln
 │
 ├───Tubes2_Stima
-│   └───Properties
-│   │     AssemblyInfo.cs
-|   |     Resources.Designer.cs
-|   |     Resources.resx
-|   |     Settings.Designer.cs
-|   |     Settings.settings
-│   │
-│   └───bin
-|   |     debug
-|   |     release
-|   |         Tubes2_Stima.exe
-│   |
-|   |
-|   └───config
-|   |      test.txt
-|   |
-|   |
-|   └───src
-|   |       BFS.cs
-|   |       Block.cs
-|   |       DFS.cs
-|   |       Matrix.cs
-|   |       Position.cs
-|   |       SearchAlgorithm.cs
-|   |
-|   |
-|   └─── visualization
-|   |
-|   |  App.config
-|   |  Form1.Designer.cs
-|   |  Form1.cs
-|   |  Form1.resx
-|   |  Program.cs
-|   |  Tubes2_Stima.csproj
-|   |  packages.config
-|   |  treasure.ico
+    └───Properties
+    │     AssemblyInfo.cs
+    |     Resources.Designer.cs
+    |     Resources.resx
+    |     Settings.Designer.cs
+    |     Settings.settings
+    │
+    └───bin
+    |     debug
+    |     release
+    |         Tubes2_Stima.exe
+    |
+    └───doc
+    |     Tubes2_thehashslingingslasher.pdf
+    |
+    └───config
+    |      test.txt
+    |
+    └───src
+    |       BFS.cs
+    |       Block.cs
+    |       DFS.cs
+    |       Matrix.cs
+    |       Position.cs
+    |       SearchAlgorithm.cs
+    |
+    |
+    └───visualization
+    |
+    |   App.config
+    |   Form1.Designer.cs
+    |   Form1.cs
+    |   Form1.resx
+    |   Program.cs
+    |   Tubes2_Stima.csproj
+    |   packages.config
+    |   treasure.ico
 ``` 
 
 ## Running The Program
