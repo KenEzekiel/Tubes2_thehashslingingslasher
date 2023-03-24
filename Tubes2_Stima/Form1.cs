@@ -156,7 +156,7 @@ namespace Tubes2_stima
                         textBox2.Text = steps;
                         textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
                         isDone = true;
-                        textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
+                        textBox4.Text = (temp.GetNumOfSteppedNodes().ToString());
                         textBox5.Text = steps.Length.ToString();
                     }
                     else if (comboBox3.Text == "Without TSP")
@@ -175,7 +175,7 @@ namespace Tubes2_stima
                         textBox2.Text = steps;
                         textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
                         isDone = true;
-                        textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
+                        textBox4.Text = (temp.GetNumOfSteppedNodes().ToString());
                         textBox5.Text = steps.Length.ToString();
                     }
                 }
@@ -198,7 +198,7 @@ namespace Tubes2_stima
                         textBox2.Text = steps;
                         textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
                         isDone = true;
-                        textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
+                        textBox4.Text = (temp.GetNumOfSteppedNodes().ToString());
                         textBox5.Text = steps.Length.ToString();
                     }
                     else if (comboBox3.Text == "Without TSP")
@@ -216,7 +216,7 @@ namespace Tubes2_stima
                         textBox2.Text = steps;
                         textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
                         isDone = true;
-                        textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
+                        textBox4.Text = (temp.GetNumOfSteppedNodes().ToString());
                         textBox5.Text = steps.Length.ToString();
 
                     }
