@@ -334,6 +334,7 @@ namespace Tubes2_stima
             if (!stopVisualize)
             {
                 displayImage();
+                pictureBox2.Image = null;
             }
             
 
