@@ -232,7 +232,7 @@ namespace Matrices
             stepAt(curr);
             rerenderPtr(ref graphic, curr, playerPath);
             Position prev = new Position(curr);
-            image.Save(folderPath + (1).ToString() + ".png", System.Drawing.Imaging.ImageFormat.Png);
+            image.Save(folderPath + (1).ToString() + ".jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
 
             for (int i = 0; i < walkPath.Length; i++)
             {
@@ -242,7 +242,7 @@ namespace Matrices
                 rerenderPtr(ref graphic, curr, playerPath);
                 prev.setI(curr.getI());
                 prev.setJ(curr.getJ());
-                image.Save(folderPath + (i + 2).ToString() + ".png", System.Drawing.Imaging.ImageFormat.Png);
+                image.Save(folderPath + (i + 2).ToString() + ".jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
             }
         }
 
@@ -361,14 +361,18 @@ namespace Matrices
 
             // visualize kosong (belom diapa-apain, 1 gambar)
             resetEverything();
-            visualize(folderPath + "0.png");
+            visualize(folderPath + "0.jpeg");
 
             //// visualize search (len(search) + 1 gambar)
-            animateWalk(folderPath, search, player);
+            if (search.Length < 200)
+            {
+                animateWalk(folderPath, search, player);
+            }
+            
 
             // visualize route (1 gambar)
             walk(route);
-            visualize(folderPath + (search.Length + 2).ToString() + ".png");
+            visualize(folderPath + (search.Length + 2).ToString() + ".jpeg");
         }
 
         public static Image resizeImage(Image imgToResize, Size size)

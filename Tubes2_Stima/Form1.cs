@@ -110,6 +110,8 @@ namespace Tubes2_stima
         }
 
         bool stopVisualize = true;
+
+        Matrices.Matrix temp;
         private void button1_Click(object sender, EventArgs e)
         {
             // Start search
@@ -122,10 +124,9 @@ namespace Tubes2_stima
             } 
             
 
-            String steps = "";
 
             Matrices.Matrix matrix = new Matrices.Matrix(filePath);
-
+            temp = matrix;
 
 
             Console.WriteLine(matrix.ToString());
@@ -143,39 +144,39 @@ namespace Tubes2_stima
                     //
                     Stopwatch stopwatch = new Stopwatch();
                     stopwatch.Start();
-                    steps = dfs.startSearch(start, true);
+                    string steps = dfs.startSearch(start, true);
                     stopwatch.Stop();
                     string x = "DFS1";
                     Console.WriteLine(steps);
+                    string search = steps;
                     // visualisasi disimpen di folder visualization
                     // urutan: belom diapa2in, search (animasi), route
-                    matrix.visualizeAll("../../visualization/", steps, steps);
+                    temp.visualizeAll("../../visualization/", steps, search);
                     textBox1.Text = x;
                     textBox2.Text = steps;
                     textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
                     isDone = true;
                     textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
                     textBox5.Text = steps.Length.ToString();
-
                 }
                 else if (comboBox3.Text == "Without TSP")
                 {
                     string x = "DFS2";
                     Stopwatch stopwatch = new Stopwatch();
                     stopwatch.Start();
-                    steps = dfs.startSearch(start, false);
+                    string steps = dfs.startSearch(start, false);
                     stopwatch.Stop();
                     Console.WriteLine(steps);
+                    string search = steps;
                     // visualisasi disimpen di folder visualization
                     // urutan: belom diapa2in, search (animasi), route
-                    matrix.visualizeAll("../../visualization/", steps, steps);
+                    temp.visualizeAll("../../visualization/", steps, search);
                     textBox1.Text = x;
                     textBox2.Text = steps;
                     textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
                     isDone = true;
                     textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
                     textBox5.Text = steps.Length.ToString();
-
                 }
             }
             if (radioButton2.Checked)
@@ -188,17 +189,17 @@ namespace Tubes2_stima
                     string search = "";
                     Stopwatch stopwatch = new Stopwatch();
                     stopwatch.Start();
-                    string step = bfs.Search(true, ref search);
+                    string steps = bfs.Search(true, ref search);
                     stopwatch.Stop();
                     // visualisasi disimpen di folder visualization
                     // urutan: belom diapa2in, search (animasi), route
-                    matrix.visualizeAll("../../visualization/", step, search);
+                    matrix.visualizeAll("../../visualization/", steps, search);
                     textBox1.Text = x;
-                    textBox2.Text = step;
+                    textBox2.Text = steps;
                     textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
                     isDone = true;
                     textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
-                    textBox5.Text = step.Length.ToString();
+                    textBox5.Text = steps.Length.ToString();
                 }
                 else if (comboBox3.Text == "Without TSP")
                 {
@@ -206,17 +207,18 @@ namespace Tubes2_stima
                     string search = "";
                     Stopwatch stopwatch = new Stopwatch();
                     stopwatch.Start();
-                    string step = bfs.Search(false, ref search);
+                    string steps = bfs.Search(false, ref search);
                     stopwatch.Stop();
                     // visualisasi disimpen di folder visualization
                     // urutan: belom diapa2in, search (animasi), route
-                    matrix.visualizeAll("../../visualization/", step, search);
+                    temp.visualizeAll("../../visualization/", steps, search);
                     textBox1.Text = x;
-                    textBox2.Text = step;
+                    textBox2.Text = steps;
                     textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
                     isDone = true;
                     textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
-                    textBox5.Text = step.Length.ToString();
+                    textBox5.Text = steps.Length.ToString();
+                    
                 }
             }
             
@@ -282,7 +284,7 @@ namespace Tubes2_stima
         {
             if (isDone)
             {
-                string[] imagePaths = System.IO.Directory.GetFiles(folderPath, "*.png").OrderBy(f => File.GetLastWriteTime(f)).ToArray();
+                string[] imagePaths = System.IO.Directory.GetFiles(folderPath, "*.jpeg").OrderBy(f => File.GetLastWriteTime(f)).ToArray();
                 // ada sedikit masalah minor di sini, jadi kalo mo animasi, pastiin gambarnya udah selsai dibikin semua baru klik slider
                 // karna kalo ngga nanti gambarnya kepotong / keluar error out of bounds
                 if (imagePaths == null || imagePaths.Length == 0)
@@ -302,8 +304,10 @@ namespace Tubes2_stima
                         pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
 
                         await Task.Delay(TimeSpan.FromSeconds(currentSpeed / 1000));
+                        image.Dispose();
                         if (stopVisualize)
                         {
+                            
                             pictureBox2.Image = null;
                             break;
                         }
@@ -334,13 +338,17 @@ namespace Tubes2_stima
             // Visualize
 
             Console.WriteLine("Visualizer");
+            
             stopVisualize = !stopVisualize;
 
             if (!stopVisualize)
             {
+                pictureBox2.Image = Image.FromFile("../../assets/banner.jpg");
                 displayImage();
-                pictureBox2.Image = null;
+                
             }
+            pictureBox2.Image = null;
+            
             
 
         }
