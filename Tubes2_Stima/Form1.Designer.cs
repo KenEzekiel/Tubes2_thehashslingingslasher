@@ -338,6 +338,7 @@ namespace Tubes2_stima
             this.textBox4.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox4.Size = new System.Drawing.Size(87, 40);
             this.textBox4.TabIndex = 36;
+            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // textBox5
             // 
@@ -350,6 +351,7 @@ namespace Tubes2_stima
             this.textBox5.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox5.Size = new System.Drawing.Size(87, 40);
             this.textBox5.TabIndex = 37;
+            this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
             // 
             // label11
             // 

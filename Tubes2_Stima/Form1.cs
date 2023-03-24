@@ -154,6 +154,8 @@ namespace Tubes2_stima
                     textBox2.Text = steps;
                     textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
                     isDone = true;
+                    textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
+                    textBox5.Text = steps.Length.ToString();
 
                 }
                 else if (comboBox3.Text == "Without TSP")
@@ -171,7 +173,8 @@ namespace Tubes2_stima
                     textBox2.Text = steps;
                     textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
                     isDone = true;
-
+                    textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
+                    textBox5.Text = steps.Length.ToString();
 
                 }
             }
@@ -194,7 +197,8 @@ namespace Tubes2_stima
                     textBox2.Text = step;
                     textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
                     isDone = true;
-
+                    textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
+                    textBox5.Text = step.Length.ToString();
                 }
                 else if (comboBox3.Text == "Without TSP")
                 {
@@ -211,7 +215,8 @@ namespace Tubes2_stima
                     textBox2.Text = step;
                     textBox3.Text = stopwatch.ElapsedMilliseconds.ToString();
                     isDone = true;
-
+                    textBox4.Text = (Matrices.Matrix.NumOfSteppableNodes.ToString());
+                    textBox5.Text = step.Length.ToString();
                 }
             }
             
@@ -337,6 +342,16 @@ namespace Tubes2_stima
                 pictureBox2.Image = null;
             }
             
+
+        }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
 
         }
     }
