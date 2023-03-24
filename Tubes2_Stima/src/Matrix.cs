@@ -164,7 +164,7 @@ namespace Matrices
             int NumOfSteppedNodes = 0;
             for (int i = 0; i < nRow; i++) {
                 for (int j = 0; j < nCol; j++) {
-                    if (this.mat[i,j].canStep() &&(((Basic)this.mat[i, j]).getStepCount() > 0)) {
+                    if (this.mat[i,j].canStep() && ((Basic)this.mat[i, j]).getStepCount() > 0) {
                         NumOfSteppedNodes++;
                     }
                 }
@@ -359,20 +359,21 @@ namespace Matrices
             Random rnd = new Random();
             string player = playersPath[rnd.Next(playersPath.Length)];
 
-            // visualize kosong (belom diapa-apain, 1 gambar)
+            // visualize kosong(belom diapa-apain, 1 gambar)
             resetEverything();
             visualize(folderPath + "0.jpeg");
 
-            //// visualize search (len(search) + 1 gambar)
+            // visualize search (len(search) + 1 gambar)
             if (search.Length < 200)
             {
                 animateWalk(folderPath, search, player);
-            } else
+            }
+            else
             {
                 string temp = search[0].ToString();
                 animateWalk(folderPath, temp, player);
             }
-            
+
 
             // visualize route (1 gambar)
             walk(route);
